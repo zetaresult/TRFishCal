@@ -21,7 +21,7 @@ def levelExpected(currentLevel, goalLevel, currentPer, pageTotal):
 
 
 st.title("낚시 계산")
-st.write("test")
+# st.write("test")
 levelName = np.load("lvlExp.npy", allow_pickle=True)
 levelName = levelName[:,0]
 
@@ -173,6 +173,7 @@ if useGoalLevel:
     df_cbait = pd.DataFrame(CbaitData).set_index("이름")
     # st.subheader("캐시 지렁이")
     st.dataframe(df_cbait, use_container_width=True)
+
 
 
 
