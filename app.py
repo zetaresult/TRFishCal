@@ -39,7 +39,7 @@ ClevelIndex = (np.where(levelName == selectCLevel)[0][0])
 
 currentPer = st.number_input("현재 경험치(%) 입력", min_value=0.0, max_value=100.0, value=0.0, step=0.01)
 
-
+st.write("낚시 페이지 계산")
 cols = st.columns(3)
 page1 = cols[0].number_input("페이지1 입력", min_value=0, value=0, step=1)
 page2 = cols[1].number_input("페이지2 입력", min_value=0, value=0, step=1)
@@ -53,7 +53,6 @@ page6 = cols2[2].number_input("페이지6 입력", min_value=0, value=0, step=1)
 useGoalLevel = st.checkbox("목표 레벨 계산", value=True)
 cols = st.columns(2)
 if useGoalLevel:
-    # st.write(levelShoes)
     
     Gcolor = cols[0].selectbox("목표 레벨", levelColor, key="goal_color")
     Gshoes = cols[1].selectbox("", levelShoes, key="goal_shoes")
@@ -175,5 +174,6 @@ if useGoalLevel:
     df_cbait = pd.DataFrame(CbaitData).set_index("이름")
     # st.subheader("캐시 지렁이")
     st.dataframe(df_cbait, use_container_width=True)
+
 
 
