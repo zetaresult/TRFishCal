@@ -137,6 +137,7 @@ fishing_rods = {
 if useGoalLevel:
     rod = st.selectbox("낚시대 종류를 선택하세요", list(fishing_rods.keys()))
     min_default, max_default = fishing_rods[rod]
+    st.write("test")
     cols = st.columns(2)
     minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
     maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
@@ -174,3 +175,4 @@ if useGoalLevel:
     df_cbait = pd.DataFrame(CbaitData).set_index("이름")
     # st.subheader("캐시 지렁이")
     st.dataframe(df_cbait, use_container_width=True)
+
