@@ -1,3 +1,4 @@
+# %%writefile app.py
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -122,11 +123,23 @@ def formatTime(totalSeconds):
     if not parts:  # 전부 0인 경우
         return "0분"
     return " ".join(parts)
-    
+
+
+#### 낚시대
+
+fishing_rods = {
+    "죽도 낚싯대": (40, 80),
+    "천사의 낚싯대": (30, 90),
+    "악마의 낚싯대": (50, 70),
+    "추후 추가예정": (0, 0),
+}
+
 if useGoalLevel:
+    rod = st.selectbox("낚시대 종류를 선택하세요", list(fishing_rods.keys()))
+    min_default, max_default = fishing_rods[rod]
     cols = st.columns(2)
-    minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=0, step=1)
-    maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=0, step=1)
+    minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
+    maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
     
     
     
