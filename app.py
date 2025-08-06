@@ -21,7 +21,7 @@ def levelExpected(currentLevel, goalLevel, currentPer, pageTotal):
 
 
 st.title("낚시 계산")
-# st.write("test")
+
 levelName = np.load("lvlExp.npy", allow_pickle=True)
 levelName = levelName[:,0]
 
@@ -128,11 +128,13 @@ def formatTime(totalSeconds):
 #### 낚시대
 
 fishing_rods = {
+    "낚시대 선택": (0, 0),
     "죽도 낚싯대": (40, 80),
     "천사의 낚싯대": (30, 90),
     "악마의 낚싯대": (50, 70),
     "추후 추가예정": (0, 0),
 }
+
 if useGoalLevel:
     rod = st.selectbox("낚시대 종류를 선택하세요", list(fishing_rods.keys()))
     min_default, max_default = fishing_rods[rod]
@@ -173,7 +175,3 @@ if useGoalLevel:
     df_cbait = pd.DataFrame(CbaitData).set_index("이름")
     # st.subheader("캐시 지렁이")
     st.dataframe(df_cbait, use_container_width=True)
-
-
-
-
