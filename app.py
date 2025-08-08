@@ -186,7 +186,9 @@ st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'
 
 @st.dialog("예약종료 사용법")
 def scheduleInfo():
-    st.markdown(" 1. 키보드에서 `윈도우키` + `R` 키를 동시에 눌러 `실행` 창을 엽니다.\n 2. 입력 창에 명령어를 붙여넣고 Enter 키를 누르세요.\n [info]\n 평균적인 시간이므로 최대 살림망까지 다 차지 않을 수 있습니다.")
+    st.markdown("1. 키보드에서 `윈도우키` + `R` 키를 동시에 눌러 `실행` 창을 엽니다.")
+    st.markdown("2. 입력 창에 명령어를 붙여넣고 Enter 키를 누르세요.")
+    st.markdown("[info] 평균적인 시간이므로 최대 살림망까지 다 차지 않을 수 있습니다.")
 st.write(" ")
 
 if st.button("[예약 종료 설명 보기]"):
