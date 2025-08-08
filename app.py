@@ -155,7 +155,7 @@ st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'
 
 st.write(" ")
 premium_storage = st.checkbox("프리미엄 티켓", value=False)
-rod = st.selectbox("낚싯대 종류를 선택하세요", ordered_keys)
+rod = st.selectbox("낚싯대 종류를 선택하세요", ordered_rods_keys)
 friend = st.selectbox("낚시 프렌즈를 선택하세요", ordered_friends_keys)
 min_default, max_default, storage_default = fishing_rods[rod]
 f_min, f_max, f_storage = fishing_friends[friend]
