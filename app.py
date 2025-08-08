@@ -36,6 +36,7 @@ def formatTime(totalSeconds):
     if not parts:  # 전부 0인 경우
         return "0분"
     return " ".join(parts)
+@st.dialog("예약종료 사용법")
 def scheduleInfo():
     st.markdown("""
 1. 키보드에서 `윈도우키` + `R` 키를 동시에 눌러 `실행` 창을 엽니다.  
@@ -272,4 +273,5 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {(min_default2+max_default2)/2}초</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name}이 약 {(rod_seconds//((min_default2+max_default2)/2))}개 소모됩니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {ㅇㅇ}개는 {selected_exp * ((rod_seconds//((min_default2+max_default2)/2)))}EXP입니다.</div>", unsafe_allow_html=True)
+
 
