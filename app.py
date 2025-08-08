@@ -131,7 +131,7 @@ def formatTime(totalSeconds):
 #### 낚싯대
 
 fishing_rods = {
-    "낚싯대 선택": (0, 0, 0),
+    "낚싯대 선택(추가 예정)": (0, 0, 0),
     "죽도 낚싯대": (40, 80, 0),
     "천사의 낚싯대": (30, 90, 100),
     "악마의 낚싯대": (50, 70, 100),
@@ -139,13 +139,16 @@ fishing_rods = {
     "푸른 장미검 낚싯대": (30, 80, 50),
 }
 
-sorted_keys = sorted(k for k in fishing_rods if k != "낚싯대 선택")
-ordered_keys = ["낚싯대 선택"] + sorted_keys
+sorted_rods_keys = sorted(k for k in fishing_rods if k != "낚싯대 선택")
+ordered_rods_keys = ["낚싯대 선택(추가 예정)"] + sorted_rods_keys
 
 fishing_friends = {
     "낚시 프렌즈 선택(추가 예정)" : (0, 0, 0),
     "화이트 똑똑 쥐돌이": (0, 8, 60),
 }
+
+sorted_friends_keys = sorted(k for k in fishing_rods if k != "낚시 프렌즈 선택(추가 예정)")
+ordered_friends_keys = ["낚시 프렌즈 선택(추가 예정)"] + sorted_friends_keys
 
 st.write(" ")
 st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 미끼 계산", unsafe_allow_html=True)
@@ -153,7 +156,7 @@ st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'
 st.write(" ")
 premium_storage = st.checkbox("프리미엄 티켓", value=False)
 rod = st.selectbox("낚싯대 종류를 선택하세요", ordered_keys)
-friend = st.selectbox("낚시 프렌즈를 선택하세요", list(fishing_friends.keys()))
+friend = st.selectbox("낚시 프렌즈를 선택하세요", ordered_friends_keys))
 min_default, max_default, storage_default = fishing_rods[rod]
 f_min, f_max, f_storage = fishing_friends[friend]
 
