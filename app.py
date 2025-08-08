@@ -251,9 +251,9 @@ elif menu == "테런 낚싯대 계산기":
     st.title("테런 낚싯대 예상")
     rod_times = st.selectbox("테런 낚싯대 시간 팩", ["15분", "30분", "1시간"])
 
-    if rod_time == "15분" : rod_seconds = 15*60 
-    elif rod_time == "30분": rod_seconds = 30*60
-    elif rod_time == "1시간": rod_seconds = 60*60
+    if rod_times == "15분" : rod_seconds = 15*60 
+    elif rod_times == "30분": rod_seconds = 30*60
+    elif rod_times == "1시간": rod_seconds = 60*60
     
     friend2 = st.selectbox("낚시 프렌즈를 선택하세요", ordered_friends_keys)
     f_min2, f_max2, _ = fishing_friends[friend2]
@@ -271,6 +271,7 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {(min_default2+max_default2)/2}초</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name}이 약 {(rod_seconds//((min_default2+max_default2)/2))}개 소모됩니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {ㅇㅇ}개는 {selected_exp * ((rod_seconds//((min_default2+max_default2)/2)))}EXP입니다.</div>", unsafe_allow_html=True)
+
 
 
 
