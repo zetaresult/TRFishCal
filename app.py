@@ -138,14 +138,25 @@ fishing_rods = {
     "추후 추가예정": (0, 0),
 }
 
+st.write(" ")
+st.write("낚시 시간 및 미끼 계산")
+
+rod = st.selectbox("낚싯대 종류를 선택하세요", list(fishing_rods.keys()))
+min_default, max_default = fishing_rods[rod]
+cols = st.columns(2)
+minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
+maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
+
+
+fishStorage = st.number_input("최대 살림망", min_value=0, value=0, step=1)
+
+st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>약 한 마리 당 {(minFTime+maxFTime)/2}초</div>", unsafe_allow_html=True)
+st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 {formatTime(((minFTime+maxFTime)/2)*fishStroage)}</div>", unsafe_allow_html=True)
+
+
+
+
 if useGoalLevel:
-    rod = st.selectbox("낚싯대 종류를 선택하세요", list(fishing_rods.keys()))
-    min_default, max_default = fishing_rods[rod]
-    cols = st.columns(2)
-    minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
-    maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
-    
-    
     
     TbaitData = []
     for bait in Tbaits:
