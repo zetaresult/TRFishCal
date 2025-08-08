@@ -163,11 +163,11 @@ if "premium_storage" not in st.session_state:
     st.session_state.premium_storage = False
 
 if st.session_state.premium_storage:
-    storage_default += 300
+    storage_final = storage_default + 300
 else:
-    storage_default += 150
+    storage_final = storage_default + 150
 
-fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
+fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_final, step=1)
 
 
 premium_storage = st.checkbox("프리미엄 티켓", value=st.session_state.premium_storage)
