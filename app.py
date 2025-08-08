@@ -159,10 +159,11 @@ cols = st.columns(2)
 minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
 maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
 
-fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
 premium_storage = st.checkbox("프리미엄 티켓", value=False)
 if premium_storage: storage_default += 300
 else: storage_default += 150
+fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
+
 
 
 st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {(minFTime+maxFTime)/2}초</div>", unsafe_allow_html=True)
