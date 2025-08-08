@@ -137,12 +137,22 @@ fishing_rods = {
     "악마의 낚싯대": (50, 70),
     "추후 추가예정": (0, 0),
 }
+fishing_friends = {
+    "낚시 프렌즈 선택" : (0, 0),
+    "화이트 똑똑 쥐돌이": (0, 80),
+}
 
 st.write(" ")
 st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 미끼 계산", unsafe_allow_html=True)
 
 rod = st.selectbox("낚싯대 종류를 선택하세요", list(fishing_rods.keys()))
+firend = st.selectbox("낚시 프렌즈를 선택하세요", list(fishing_friends.keys()))
 min_default, max_default = fishing_rods[rod]
+f_min, f_max = fishing_friends[friend]
+
+min_default -= f_min
+max_default -= f_max
+
 cols = st.columns(2)
 minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
 maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
