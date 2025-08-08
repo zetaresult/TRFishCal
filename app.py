@@ -203,8 +203,6 @@ if menu == "경험치 및 낚시 계산기":
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 종료 명령어 : shutdown -s -t {round((((minFTime+maxFTime)/2)*fishStorage))}</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 취소 명령어 : shutdown -a</div>", unsafe_allow_html=True)
     
-    @st.dialog("예약종료 사용법")
-    
     st.write(" ")
     if st.button("[예약 종료 설명 보기]"):
         scheduleInfo()
@@ -273,5 +271,6 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {(min_default2+max_default2)/2}초</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name}이 약 {(rod_seconds//((min_default2+max_default2)/2))}개 소모됩니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {ㅇㅇ}개는 {selected_exp * ((rod_seconds//((min_default2+max_default2)/2)))}EXP입니다.</div>", unsafe_allow_html=True)
+
 
 
