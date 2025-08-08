@@ -139,7 +139,7 @@ fishing_rods = {
 }
 
 st.write(" ")
-st.write("낚시 시간 및 미끼 계산")
+st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 미끼 계산", unsafe_allow_html=True)
 
 rod = st.selectbox("낚싯대 종류를 선택하세요", list(fishing_rods.keys()))
 min_default, max_default = fishing_rods[rod]
