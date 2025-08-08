@@ -131,15 +131,15 @@ def formatTime(totalSeconds):
 #### 낚싯대
 
 fishing_rods = {
-    "낚싯대 선택": (0, 0),
-    "죽도 낚싯대": (40, 80),
-    "천사의 낚싯대": (30, 90),
-    "악마의 낚싯대": (50, 70),
+    "낚싯대 선택": (0, 0, 0),
+    "죽도 낚싯대": (40, 80, 0),
+    "천사의 낚싯대": (30, 90, 100),
+    "악마의 낚싯대": (50, 70, 100),
     "추후 추가예정": (0, 0),
 }
 fishing_friends = {
     "낚시 프렌즈 선택" : (0, 0),
-    "화이트 똑똑 쥐돌이": (0, 8),
+    "화이트 똑똑 쥐돌이": (0, 8, 60),
 }
 
 st.write(" ")
@@ -147,18 +147,23 @@ st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'
 
 rod = st.selectbox("낚싯대 종류를 선택하세요", list(fishing_rods.keys()))
 friend = st.selectbox("낚시 프렌즈를 선택하세요", list(fishing_friends.keys()))
-min_default, max_default = fishing_rods[rod]
-f_min, f_max = fishing_friends[friend]
+min_default, max_default, storage_default = fishing_rods[rod]
+f_min, f_max, f_storage = fishing_friends[friend]
 
 min_default -= f_min
 max_default -= f_max
+storage_default += f_storage
+
 
 cols = st.columns(2)
 minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
 maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
 
+premium_storage = st.checkbox("프리미엄 티켓", value=False)
+if premium_storage: storage_default += 300
+else: storage_default += 150
 
-fishStorage = st.number_input("최대 살림망", min_value=0, value=0, step=1)
+fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
 
 st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {(minFTime+maxFTime)/2}초</div>", unsafe_allow_html=True)
 st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {formatTime((((minFTime+maxFTime)/2)*fishStorage))}</div>", unsafe_allow_html=True)
