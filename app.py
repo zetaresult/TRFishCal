@@ -141,7 +141,7 @@ fishing_rods = {
     "푸른 장미검 낚싯대": (30, 80, 50),
 }
 
-sorted_rods_keys = sorted(k for k in fishing_rods if k != "낚싯대 선택")
+sorted_rods_keys = sorted(k for k in fishing_rods if k != "낚싯대 선택(추가 예정)")
 ordered_rods_keys = ["낚싯대 선택(추가 예정)"] + sorted_rods_keys
 
 fishing_friends = {
@@ -149,7 +149,7 @@ fishing_friends = {
     "화이트 똑똑 쥐돌이": (0, 8, 60),
 }
 
-sorted_friends_keys = sorted(k for k in fishing_rods if k != "낚시 프렌즈 선택(추가 예정)")
+sorted_friends_keys = sorted(k for k in fishing_friends if k != "낚시 프렌즈 선택(추가 예정)")
 ordered_friends_keys = ["낚시 프렌즈 선택(추가 예정)"] + sorted_friends_keys
 
 st.write(" ")
