@@ -262,7 +262,7 @@ elif menu == "테런 낚싯대 계산기":
     
     
     all_baits = Tbaits + Cbaits
-    bait_names [bait["name"] for bait in all_baits]
+    bait_names = [bait["name"] for bait in all_baits]
     selected_name = st.selectbox("지렁이를 선택하세요", bait_names)
     
     selected_bait = next(b for b in all_baits if b["name"] == selected_name)
@@ -271,6 +271,7 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {(min_default2+max_default2)/2}초</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name}이 약 {(rod_seconds//((min_default2+max_default2)/2))}개 소모됩니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {ㅇㅇ}개는 {selected_exp * ((rod_seconds//((min_default2+max_default2)/2)))}EXP입니다.</div>", unsafe_allow_html=True)
+
 
 
 
