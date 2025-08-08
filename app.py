@@ -183,9 +183,10 @@ st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'
 st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {formatTime((((minFTime+maxFTime)/2)*fishStorage))}</div>", unsafe_allow_html=True)
 st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 종료 명령어 : shutdown -s -t {round((((minFTime+maxFTime)/2)*fishStorage))}</div>", unsafe_allow_html=True)
 st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 취소 명령어 : shutdown -a</div>", unsafe_allow_html=True)
+
+@st.dialog("예약종료 사용법")
 if st.button("[예약 종료 설명 보기]"):
-    with st.modal("예약종료 사용법"):
-        st.markdown("""
+    st.markdown("""
 1. **키보드에서 `윈도우키` + `R` 키**를 동시에 누르세요.  
    👉 실행 창이 열립니다.
 2. 입력 창에 아래 명령어를 붙여넣고 `Enter` 키를 누르세요.
