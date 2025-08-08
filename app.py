@@ -73,7 +73,7 @@ per = nowPer / 100 * 100  # 0~100%
 
 if expRequired != -1: 
     barText = f"{nowPer:.2f}% ({expRequired:,} EXP 남음)"
-    if (useGoalLevel) and (expRequired == 0): f"{nowPer:.2f}% [목표레벨 달성!]"
+    if (useGoalLevel) and (expRequired == 0): barText = f"{nowPer:.2f}% [목표레벨 달성!]"
 else: barText = f"{nowPer:.2f}%"
 
 bar_html = f"""
