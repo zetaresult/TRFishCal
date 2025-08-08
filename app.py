@@ -200,7 +200,7 @@ if useGoalLevel:
 
     df_tbait = pd.DataFrame(TbaitData).set_index("이름")
     # st.subheader("일반 지렁이")
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>레벨 업에 필요한 지렁이 정보</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>목표 레벨에 필요한 지렁이 정보</div>", unsafe_allow_html=True)
     st.write(" ")
     st.dataframe(df_tbait, use_container_width=True)
     
