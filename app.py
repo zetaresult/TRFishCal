@@ -150,7 +150,7 @@ maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_de
 
 fishStorage = st.number_input("최대 살림망", min_value=0, value=0, step=1)
 
-st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>약 한 마리 당 {(minFTime+maxFTime)/2}초</div>", unsafe_allow_html=True)
+st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {(minFTime+maxFTime)/2}초</div>", unsafe_allow_html=True)
 st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {formatTime((((minFTime+maxFTime)/2)*fishStorage))}</div>", unsafe_allow_html=True)
 st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 종료 명령어 : shutdown -s -t {round((((minFTime+maxFTime)/2)*fishStorage))}</div>", unsafe_allow_html=True)
 st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 취소 명령어 : shutdown -a</div>", unsafe_allow_html=True)
