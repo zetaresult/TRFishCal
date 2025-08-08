@@ -182,12 +182,12 @@ if menu == "경험치 및 낚시 계산기":
     min_default, max_default, storage_default = fishing_rods[rod]
     f_min, f_max, f_storage = fishing_friends[friend]
     
-    min_default -= f_min
-    max_default -= f_max
-    storage_default += f_storage
-    
+    # min_default -= f_min
+    # max_default -= f_max
     min_default = max(0, min_default - f_min) # 에러처리를 위함
     max_default = max(0, max_default - f_max) # 프렌즈를 먼저 고를 경우 음수로 에러남.
+    storage_default += f_storage
+    
     
     cols = st.columns(2)
     minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
@@ -274,6 +274,7 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 전: {selected_name} {round(rod_seconds/((min_default2+max_default2)/2)):,}개는 {round(selected_exp * ((rod_seconds/((min_default2+max_default2)/2)))):,}EXP입니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: {selected_name} {round((rod_seconds/((min_default2+max_default2)/2))*1.5):,}개는 {round(selected_exp * ((rod_seconds/((min_default2+max_default2)/2)))*1.5):,}EXP입니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>15~20초 평균 기준으로 계산되었으며, 보정값은 1.5배수입니다.</div>", unsafe_allow_html=True)
+
 
 
 
