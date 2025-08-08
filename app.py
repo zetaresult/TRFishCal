@@ -145,6 +145,7 @@ fishing_friends = {
 st.write(" ")
 st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 미끼 계산", unsafe_allow_html=True)
 
+st.write(" ")
 premium_storage = st.checkbox("프리미엄 티켓", value=False)
 rod = st.selectbox("낚싯대 종류를 선택하세요", list(fishing_rods.keys()))
 friend = st.selectbox("낚시 프렌즈를 선택하세요", list(fishing_friends.keys()))
@@ -186,9 +187,11 @@ if useGoalLevel:
             "총 TR": f"{totalTR:,} TR",
             "예상 소요 시간": formatTime(totalSeconds),
         })
-    
+
     df_tbait = pd.DataFrame(TbaitData).set_index("이름")
     # st.subheader("일반 지렁이")
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>레벨 업에 필요한 지렁이 정보</div>", unsafe_allow_html=True)
+    st.write(" ")
     st.dataframe(df_tbait, use_container_width=True)
     
     CbaitData = []
@@ -205,7 +208,6 @@ if useGoalLevel:
     
     df_cbait = pd.DataFrame(CbaitData).set_index("이름")
     # st.subheader("캐시 지렁이")
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>레벨 업에 필요한 지렁이 정보</div>", unsafe_allow_html=True)
 
     st.dataframe(df_cbait, use_container_width=True)
 
