@@ -132,18 +132,21 @@ if menu == "경험치 및 낚시 계산기":
         selectGLevel, GlevelIndex = -1, -1
     
     st.write(" ")
-    st.write("낚시 페이지 계산")
-    
-    cols = st.columns(3)
-    page1 = cols[0].number_input("페이지1 입력", min_value=0, value=0, step=1)
-    page2 = cols[1].number_input("페이지2 입력", min_value=0, value=0, step=1)
-    page3 = cols[2].number_input("페이지3 입력", min_value=0, value=0, step=1)
-    cols2 = st.columns(3)
-    page4 = cols2[0].number_input("페이지4 입력", min_value=0, value=0, step=1)
-    page5 = cols2[1].number_input("페이지5 입력", min_value=0, value=0, step=1)
-    page6 = cols2[2].number_input("페이지6 입력", min_value=0, value=0, step=1)
-    
-    
+    # st.write("낚시 페이지 계산")
+    useFishPage = st.checkbox("낚시 페이지 계산", value=False)
+    if useFishPage:
+        cols = st.columns(3)
+        page1 = cols[0].number_input("페이지1 입력", min_value=0, value=0, step=1)
+        page2 = cols[1].number_input("페이지2 입력", min_value=0, value=0, step=1)
+        page3 = cols[2].number_input("페이지3 입력", min_value=0, value=0, step=1)
+        cols2 = st.columns(3)
+        page4 = cols2[0].number_input("페이지4 입력", min_value=0, value=0, step=1)
+        page5 = cols2[1].number_input("페이지5 입력", min_value=0, value=0, step=1)
+        page6 = cols2[2].number_input("페이지6 입력", min_value=0, value=0, step=1)
+        totalPage = page1+page2+page3+page4+page5+page6
+    else:
+        totalPage = 0
+        
     expectedLvl ,expRequired, nowPer = levelExpected(ClevelIndex, GlevelIndex, currentPer, page1+page2+page3+page4+page5+page6)
     
     per = nowPer / 100 * 100  # 0~100%
@@ -274,6 +277,7 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 전: {selected_name} {round(rod_seconds/((min_default2+max_default2)/2)):,}개는 {round(selected_exp * ((rod_seconds/((min_default2+max_default2)/2)))):,}EXP입니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: {selected_name} {round((rod_seconds/((min_default2+max_default2)/2))*1.5):,}개는 {round(selected_exp * ((rod_seconds/((min_default2+max_default2)/2)))*1.5):,}EXP입니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>15~20초 평균 기준으로 계산되었으며, 보정값은 1.5배수입니다.</div>", unsafe_allow_html=True)
+
 
 
 
