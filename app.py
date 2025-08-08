@@ -256,9 +256,10 @@ elif menu == "테런 낚싯대 계산기":
     
     friend2 = st.selectbox("낚시 프렌즈를 선택하세요", ordered_friends_keys)
     f_min2, f_max2, _ = fishing_friends[friend2]
-    min_default2 = 10 - f_min2
-    max_default2 = 20 - f_max2
+
     
+    min_default2 = 15 - f_min2
+    max_default2 = 20 - f_max2
     
     all_baits = Tbaits + Cbaits
     bait_names = [bait["name"] for bait in all_baits]
@@ -269,6 +270,8 @@ elif menu == "테런 낚싯대 계산기":
 
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리당 약 {(min_default2+max_default2)/2}초이며, 약 {round(rod_seconds/((min_default2+max_default2)/2)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round(rod_seconds/((min_default2+max_default2)/2)):,}개는 {round(selected_exp * ((rod_seconds/((min_default2+max_default2)/2)))):,}EXP입니다.</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 10px; font-weight: bold; margin-top: 12px;'>15~20초 평균 기준으로 계산되었으며, 특히 테낚은 오차가 큽니다. 참고만 해주세요.</div>", unsafe_allow_html=True)
+
 
 
 
