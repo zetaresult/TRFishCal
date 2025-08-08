@@ -2,7 +2,6 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-from josa import josa
 
 def levelExpected(currentLevel, goalLevel, currentPer, pageTotal):
     levelData = np.load('lvlExp.npy', allow_pickle=True)
@@ -268,10 +267,10 @@ elif menu == "테런 낚싯대 계산기":
     selected_bait = next(b for b in all_baits if b["name"] == selected_name)
     selected_exp = selected_bait["exp"]
 
-    selected_name_josa = josa(f"{selected_name}은/는") 
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {(min_default2+max_default2)/2}초</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name_josa} 약 {round(rod_seconds//((min_default2+max_default2)/2)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} 약 {round(rod_seconds//((min_default2+max_default2)/2)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round(rod_seconds//((min_default2+max_default2)/2)):,}개는 {round(selected_exp * ((rod_seconds//((min_default2+max_default2)/2)))):,}EXP입니다.</div>", unsafe_allow_html=True)
+
 
 
 
