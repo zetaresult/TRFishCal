@@ -145,6 +145,7 @@ fishing_friends = {
 st.write(" ")
 st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 미끼 계산", unsafe_allow_html=True)
 
+premium_storage = st.checkbox("프리미엄 티켓", value=False)
 rod = st.selectbox("낚싯대 종류를 선택하세요", list(fishing_rods.keys()))
 friend = st.selectbox("낚시 프렌즈를 선택하세요", list(fishing_friends.keys()))
 min_default, max_default, storage_default = fishing_rods[rod]
@@ -159,7 +160,6 @@ cols = st.columns(2)
 minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
 maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
 
-premium_storage = st.checkbox("프리미엄 티켓", value=False)
 if premium_storage: storage_default += 300
 else: storage_default += 150
 fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
@@ -205,6 +205,8 @@ if useGoalLevel:
     
     df_cbait = pd.DataFrame(CbaitData).set_index("이름")
     # st.subheader("캐시 지렁이")
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>레벨 업에 필요한 지렁이 정보</div>", unsafe_allow_html=True)
+
     st.dataframe(df_cbait, use_container_width=True)
 
 
