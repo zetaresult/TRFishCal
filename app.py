@@ -89,7 +89,7 @@ fishing_friends = {
     "토집사와 아기토끼": (10, 0, 100),
     "미드나잇 쿠션냥": (4, 4, 80),
     "밀덕이는 낚시 중": (5, 0, 140),
-    "쌀덕이는 낙시 중": (0, 10, 120),
+    "쌀덕이는 낚시 중": (0, 10, 120),
 }
 
 sorted_friends_keys = sorted(k for k in fishing_friends if k != "낚시 프렌즈 선택(추가 예정)")
@@ -289,6 +289,7 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
+
 
 
 
