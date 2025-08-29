@@ -322,7 +322,7 @@ elif menu == "경험치 ↔ 지렁이":
         target_xp = st.number_input("목표 경험치 입력", min_value=0, value=0, step=1)
 
         if target_xp > 0:
-            st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name2} : 약 {round(currentPer//selected_exp):,}개가 필요합니다.</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name2} : 약 {round(target_xp//selected_exp):,}개가 필요합니다.</div>", unsafe_allow_html=True)
             
 
     elif mode == "worms_to_xp":
@@ -340,6 +340,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
