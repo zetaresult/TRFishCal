@@ -187,7 +187,9 @@ if menu == "경험치 및 낚시 계산기":
     st.write(" ")
     premium_storage = st.checkbox("프리미엄 티켓", value=False)
     rod = st.selectbox("낚싯대 종류를 선택하세요", ordered_rods_keys, index=0)
-    if rod == "테런 낚싯대": st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>테런 낚싯대 계산은 정확하지 않습니다. 왼쪽 화살표에서 메뉴를 확인해주세요.</div>", unsafe_allow_html=True)
+    if rod == "테런 낚싯대": 
+        st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>테런 낚싯대 계산은 정확하지 않습니다. 왼쪽 화살표에서 메뉴를 확인해주세요.</div>", unsafe_allow_html=True)
+        st.write(" ")
     friend = st.selectbox("낚시 프렌즈를 선택하세요", ordered_friends_keys, index=0)
     min_default, max_default, storage_default = fishing_rods[rod]
     f_min, f_max, f_storage = fishing_friends[friend]
@@ -289,6 +291,7 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
+
 
 
 
