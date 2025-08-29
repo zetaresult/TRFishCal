@@ -77,6 +77,7 @@ fishing_rods = {
     "악마의 낚싯대": (50, 70, 100),
     "매직 스타 낚싯대": (40, 70, 50),
     "푸른 장미검 낚싯대": (30, 80, 50),
+    "테런 낚싯대": (15, 20, 150),
 }
 
 sorted_rods_keys = sorted(k for k in fishing_rods if k != "낚싯대 선택(추가 예정)")
@@ -87,6 +88,8 @@ fishing_friends = {
     "화이트 똑똑 쥐돌이": (0, 8, 60),
     "토집사와 아기토끼": (10, 0, 100),
     "미드나잇 쿠션냥": (4, 4, 80),
+    "밀덕이는 낚시 중": (5, 0, 140),
+    "쌀덕이는 낙시 중": (0, 10, 120),
 }
 
 sorted_friends_keys = sorted(k for k in fishing_friends if k != "낚시 프렌즈 선택(추가 예정)")
@@ -184,6 +187,7 @@ if menu == "경험치 및 낚시 계산기":
     st.write(" ")
     premium_storage = st.checkbox("프리미엄 티켓", value=False)
     rod = st.selectbox("낚싯대 종류를 선택하세요", ordered_rods_keys, index=0)
+    if rod == "테런 낚싯대": st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>테런 낚싯대 계산은 정확하지 않습니다. 왼쪽 화살표에서 메뉴를 확인해주세요.</div>", unsafe_allow_html=True)
     friend = st.selectbox("낚시 프렌즈를 선택하세요", ordered_friends_keys, index=0)
     min_default, max_default, storage_default = fishing_rods[rod]
     f_min, f_max, f_storage = fishing_friends[friend]
@@ -280,11 +284,12 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 전: 한 마리당 약 {(min_default2+max_default2)/2}초이며, 약 {round(rod_seconds/((min_default2+max_default2)/2)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round(rod_seconds/((min_default2+max_default2)/2)):,}개는 {round(selected_exp * ((rod_seconds/((min_default2+max_default2)/2)))):,}EXP입니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: 약 {round((rod_seconds/((min_default2+max_default2)/2)*1.7)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round((rod_seconds/((min_default2+max_default2)/2))*1.7):,}개는 {round(selected_exp * ((rod_seconds/((min_default2+max_default2)/2)))*1.7):,}EXP입니다.</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: 한 마리당 약 {((min_default2+max_default2)/2)/1.7}초이며, 약 {round((rod_seconds/((min_default2+max_default2)/2)*1.7)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round((rod_seconds/((min_default2+max_default2)/2))*1.7):,}개는 {round(selected_exp * (((rod_seconds/((min_default2+max_default2)/2)))*1.7)):,}EXP입니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
+
 
 
 
