@@ -16,7 +16,10 @@ def levelExpected(currentLevel, goalLevel, currentPer, pageTotal):
     else: #목표레벨 안쓸경우
         expRequired = -1 
 
-    nowPer = (levelData[expectedLvl][1] - (levelData[expectedLvl+1][2]- currentEXP)) *(100/levelData[expectedLvl][1])
+    if expectedLvl >= len(levelData) - 1:
+        nowPer = 100.0
+    else:
+        nowPer = (levelData[expectedLvl][1] - (levelData[expectedLvl+1][2] - currentEXP)) * (100 / levelData[expectedLvl][1])
     return expectedLvl ,expRequired, nowPer
 def calcBait(FTime): return sum(FTime) / 2
 def formatTime(totalSeconds):
@@ -282,6 +285,7 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
+
 
 
 
