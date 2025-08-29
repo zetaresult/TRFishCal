@@ -65,41 +65,7 @@ Cbaits = [
     {"name": "승리의 지렁이", "exp": 21972},
     {"name": "선샤인 지렁이", "exp": 22124},
     {"name": "별빛 지렁이", "exp": 22223},
-    {"name": "해왕강림 지렁이", "exp": 22189},
-    ]
-
-#### 낚싯대
-
-fishing_rods = {
-    "낚싯대 선택(추가 예정)": (0, 0, 0),
-    "죽도 낚싯대": (40, 80, 0),
-    "천사의 낚싯대": (30, 90, 100),
-    "악마의 낚싯대": (50, 70, 100),
-    "매직 스타 낚싯대": (40, 70, 50),
-    "푸른 장미검 낚싯대": (30, 80, 50),
-    "테런 낚싯대": (15, 20, 150),
-}
-
-sorted_rods_keys = sorted(k for k in fishing_rods if k != "낚싯대 선택(추가 예정)")
-ordered_rods_keys = ["낚싯대 선택(추가 예정)"] + sorted_rods_keys
-
-fishing_friends = {
-    "낚시 프렌즈 선택(추가 예정)" : (0, 0, 0),
-    "화이트 똑똑 쥐돌이": (0, 8, 60),
-    "토집사와 아기토끼": (10, 0, 100),
-    "미드나잇 쿠션냥": (4, 4, 80),
-    "밀덕이는 낚시 중": (5, 0, 140),
-    "쌀덕이는 낚시 중": (0, 10, 120),
-}
-
-sorted_friends_keys = sorted(k for k in fishing_friends if k != "낚시 프렌즈 선택(추가 예정)")
-ordered_friends_keys = ["낚시 프렌즈 선택(추가 예정)"] + sorted_friends_keys
-
-
-st.sidebar.title("테일즈런너 유틸모음")
-menu = st.sidebar.radio(
-    "메뉴 선택 (추후 추가 예정)",
-    ["경험치 및 낚시 계산기", "테런 낚싯대 계산기"],
+   이"],
     index = 0 # 기본값
 )
 if menu == "경험치 및 낚시 계산기":
@@ -292,6 +258,52 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
 
+elif menu == "경험치 ↔ 지렁이":
+
+    def set_mode_xp_to_worms():
+        st.session_state.mode = "xp_to_worms"
+        st.session_state.selectCount = False
+
+    def set_mode_worms_to_xp():
+        st.session_state.mode = "worms_to_xp"
+        st.session_state.selectExp = False
+
+    
+    all_baits = Tbaits + Cbaits
+    bait_names = [bait["name"] for bait in all_baits]
+    selected_name2 = st.selectbox("지렁이를 선택하세요", bait_names)
+    
+    selected_bait = next(b for b in all_baits if b["name"] == selected_name2)
+    selected_exp = selected_bait["exp"]
+
+    st.checkbox("얻고 싶은 경험치 → 필요한 지렁이 수 계산", key="selectExp", on_change=set_mode_xp_to_worms)
+    st.checkbox("지렁이 수 → 얻는 경험치 계산", key="selectCount", on_change=set_mode_worms_to_xp)
+    mode = st.session_state.get("mode", None)
+
+    if mode == "xp_to_worms":
+        st.subheader("목표 경험치 → 필요한 지렁이 수 계산")
+    
+        target_xp = st.number_input("목표 경험치 입력", min_value=0, value=0, step=1)
+
+        if target_xp > 0:
+            st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name2} : 약 {round(currentPer//selected_exp):,}개가 필요합니다.</div>", unsafe_allow_html=True)
+            
+
+    elif mode == "worms_to_xp":
+        st.subheader("지렁이 수 → 얻는 총 경험치 계산")
+        
+        target_count = st.number_input("지렁이 개수 입력", min_value=0, value=0, step=1)
+        
+        if target_count > 0:
+            st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name2}의 개수는 약 {round(selected_exp * target_count):,}EXP 입니다.</div>", unsafe_allow_html=True)
+
+    
+    else:
+        st.info("계산 방식을 하나 선택해주세요.")
+    
+    
+    
+    
 
 
 
