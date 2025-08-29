@@ -41,7 +41,7 @@ def scheduleInfo():
 1. 키보드에서 `윈도우키` + `R` 키를 동시에 눌러 `실행` 창을 엽니다.  
 2. 입력 창에 명령어를 붙여넣고 Enter 키를 누르세요.  
 
-> ℹ️ 평균적인 시간이므로 최대 살림망까지 다 차지 않을 수 있습니다.  
+> ℹ️ 평균적인 시간이므로 실제 어획물과 차이가 있을 수 있습니다.  
 > 반드시 낚싯대와 낚시 프렌즈를 선택 후 예약 종료 명령어를 입력 바랍니다.  
 > (명령어 끝이 0일 경우, 컴퓨터가 강제 종료됩니다.)
 """)
@@ -279,6 +279,7 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: {selected_name} {round((rod_seconds/((min_default2+max_default2)/2))*1.5):,}개는 {round(selected_exp * ((rod_seconds/((min_default2+max_default2)/2)))*1.5):,}EXP입니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다. (지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
     
+
 
 
 
