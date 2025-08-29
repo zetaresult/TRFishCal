@@ -97,7 +97,7 @@ menu = st.sidebar.radio(
     index = 0 # 기본값
 )
 if menu == "경험치 및 낚시 계산기":
-    st.title("테런 경험치 계산")
+    st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>레벨 경험치 계산", unsafe_allow_html=True)
     
     levelName = np.load("lvlExp.npy", allow_pickle=True)
     levelName = levelName[:,0]
@@ -282,6 +282,7 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
+
 
 
 
