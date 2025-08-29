@@ -312,6 +312,8 @@ elif menu == "경험치 ↔ 지렁이":
 
     st.checkbox("얻고 싶은 경험치 → 필요한 지렁이 수 계산", key="selectExp", on_change=set_mode_xp_to_worms)
     st.checkbox("지렁이 수 → 얻는 경험치 계산", key="selectCount", on_change=set_mode_worms_to_xp)
+
+    if not st.session_state.selectExp and not st.session_state.selectCount:    st.session_state.mode = None
     mode = st.session_state.get("mode", None)
 
     if mode == "xp_to_worms":
@@ -335,9 +337,10 @@ elif menu == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
     
     
-    
+
 
 
 
