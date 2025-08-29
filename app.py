@@ -128,7 +128,14 @@ if menu == "경험치 및 낚시 계산기":
     ClevelIndex = (np.where(levelName == selectCLevel)[0][0]) 
     
     
-    currentPer = st.number_input("현재 경험치(%) 입력", min_value=0.0, max_value=100.0, value=0.0, step=0.01)
+    # currentPer = st.number_input("현재 경험치(%) 입력", min_value=0.0, max_value=100.0, value=0.0, step=0.01) # 버전이 달라지고 에러 생김
+    currentPer_str = st.text_input("현재 경험치(%) 입력", value="0.0")
+
+    try:
+        currentPer = float(currentPer_str)
+    except ValueError:
+        st.error("숫자를 입력해주세요.")
+        currentPer = 0.0
     
     
     
@@ -348,6 +355,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
