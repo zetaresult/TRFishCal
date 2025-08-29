@@ -286,11 +286,12 @@ elif menu == "테런 낚싯대 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 전: 한 마리당 약 {(min_default2+max_default2)/2}초이며, 약 {round(rod_seconds/((min_default2+max_default2)/2)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round(rod_seconds/((min_default2+max_default2)/2)):,}개는 {round(selected_exp * ((rod_seconds/((min_default2+max_default2)/2)))):,}EXP입니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: 한 마리당 약 {((min_default2+max_default2)/2)/1.7}초이며, 약 {round((rod_seconds/((min_default2+max_default2)/2)*1.7)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: 한 마리당 약 {((min_default2+max_default2)/2)/1.7:2f}초이며, 약 {round((rod_seconds/((min_default2+max_default2)/2)*1.7)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round((rod_seconds/((min_default2+max_default2)/2))*1.7):,}개는 {round(selected_exp * (((rod_seconds/((min_default2+max_default2)/2)))*1.7)):,}EXP입니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
+
 
 
 
