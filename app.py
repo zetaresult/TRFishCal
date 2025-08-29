@@ -194,11 +194,11 @@ if menu == "경험치 및 낚시 계산기":
     
     st.write(" ")
     premium_storage = st.checkbox("프리미엄 티켓", value=False)
-    rod = st.selectbox("낚싯대 종류를 선택하세요", ordered_rods_keys, index=0)
+    rod = st.selectbox("낚싯대 종류를 선택하세요 (가나다순)", ordered_rods_keys, index=0)
     if rod == "테런 낚싯대": 
         st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>테런 낚싯대 계산은 정확하지 않습니다. 왼쪽 위 화살표에서 메뉴를 확인해주세요.</div>", unsafe_allow_html=True)
         st.write(" ")
-    friend = st.selectbox("낚시 프렌즈를 선택하세요", ordered_friends_keys, index=0)
+    friend = st.selectbox("낚시 프렌즈를 선택하세요 (가나다순)", ordered_friends_keys, index=0)
     min_default, max_default, storage_default = fishing_rods[rod]
     f_min, f_max, f_storage = fishing_friends[friend]
     
@@ -277,7 +277,7 @@ elif menu == "테런 낚싯대 계산기":
     elif rod_times == "30분": rod_seconds = 30*60
     elif rod_times == "1시간": rod_seconds = 60*60
     
-    friend2 = st.selectbox("낚시 프렌즈를 선택하세요", ordered_friends_keys, index=0)
+    friend2 = st.selectbox("낚시 프렌즈를 선택하세요 (가나다순)", ordered_friends_keys, index=0)
     f_min2, f_max2, _ = fishing_friends[friend2]
 
     
@@ -348,6 +348,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
