@@ -139,7 +139,8 @@ if menu == "경험치 및 낚시 계산기":
     
     
     
-    useGoalLevel = st.checkbox("목표 레벨 계산", value=True)
+    # useGoalLevel = st.checkbox("목표 레벨 계산", value=True) # 체크해제하고 쓸 사람은 없을듯 하여 삭제
+    useGoalLevel = True
     cols = st.columns(2)
     if useGoalLevel:
         
@@ -355,6 +356,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
