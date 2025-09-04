@@ -155,7 +155,8 @@ if menu == "경험치 및 낚시 계산기":
     
     st.write(" ")
     # st.write("낚시 페이지 계산")
-    useFishPage = st.checkbox("낚시 페이지 계산", value=False)
+    # useFishPage = st.checkbox("낚시 페이지 계산", value=False) # 체크해제하고 쓸 사람은 없을듯 하여 삭제
+    useFishPage= True 
     if useFishPage:
         cols = st.columns(3)
         page1 = cols[0].number_input("페이지1 입력", min_value=0, value=0, step=1)
@@ -356,6 +357,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
