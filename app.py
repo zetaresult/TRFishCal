@@ -154,7 +154,7 @@ if menu == "경험치 및 낚시 계산기":
         selectGLevel, GlevelIndex = -1, -1
     
     st.write(" ")
-    # st.write("낚시 페이지 계산")
+    st.write("낚시 페이지 계산")
     # useFishPage = st.checkbox("낚시 페이지 계산", value=False) # 체크해제하고 쓸 사람은 없을듯 하여 삭제
     useFishPage= True 
     if useFishPage:
@@ -357,6 +357,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
