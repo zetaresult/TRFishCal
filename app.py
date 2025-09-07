@@ -7,6 +7,10 @@ import gspread
 from google.oauth2.service_account import Credentials
 import datetime
 
+st.set_page_config(
+    page_title="테일즈런너 종합계산기",
+    page_icon="🎣"
+)
 
 def connect_to_gsheet():
         
@@ -413,6 +417,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
