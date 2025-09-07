@@ -85,7 +85,7 @@ def feedback_dialog():
             st.warning("피드백을 입력해주세요.")
             return
         save_feedback(name, feedback)
-        st.success("피드백 감사합니다!")
+        st.success("피드백 감사합니다! 🎉")
         st.session_state.feedback_submitted = True
 
 
@@ -158,7 +158,7 @@ if menu == "경험치 및 낚시 계산기":
         if st.button("피드백"):
             feedback_dialog()
     if st.session_state.get("feedback_submitted", False):
-            st.success("피드백 감사합니다! 🎉")
+            # st.success("피드백 감사합니다! 🎉")
             st.session_state.feedback_submitted = False
     
     st.write(" ")
@@ -406,6 +406,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
