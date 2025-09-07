@@ -182,6 +182,12 @@ if menu == "경험치 및 낚시 계산기":
 
     try:
         currentPer = float(currentPer_str)
+            if currentPer >= 100:
+                st.warning("값이 100을 초과할 수 없습니다.")
+                currentPer = 0.0
+            elif currentPer < 0:
+                st.warning("값이 0 미만일 수 없습니다.")
+                currentPer = 0.0
     except ValueError:
         st.error("숫자를 입력해주세요.")
         currentPer = 0.0
@@ -406,6 +412,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
