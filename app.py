@@ -75,7 +75,7 @@ def scheduleInfo():
 def feedback_dialog():
     st.markdown("추가할 아이템이나 그 외 피드백 주시면 감사하겠습니다.😊")
     st.markdown("아이디어도 환영합니다!")
-    st.markdown("> ℹ️본 피드백은 IP 등의 사용자의 정보를 수집하지 않습니다.")
+    st.markdown("> ℹ️본 피드백은 IP 등 사용자의 어떠한 정보도 수집하지 않습니다.")
     name = st.text_input("닉네임 (적지 않으셔도 무방합니다.):")
     feedback = st.text_area("피드백을 작성해주세요.")
     
@@ -413,6 +413,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
