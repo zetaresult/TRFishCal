@@ -64,7 +64,7 @@ def formatTime(totalSeconds):
 def scheduleInfo():
     st.markdown("""
 1. 키보드에서 `윈도우키` + `R` 키를 동시에 눌러 `실행` 창을 엽니다.  
-2. 입력 창에 명령어를 붙여넣고 Enter 키를 누르세요.  
+2. 입력 창에 명령어를 붙여넣고 `Enter` 키를 누르세요.  
 
 > ℹ️ 평균적인 시간이므로 실제 어획물과 차이가 있을 수 있습니다.  
 > 반드시 낚싯대와 낚시 프렌즈를 선택 후 예약 종료 명령어를 입력 바랍니다.  
@@ -74,14 +74,15 @@ def scheduleInfo():
 @st.dialog("피드백 작성")
 def feedback_dialog():
     st.markdown("추가할 아이템이나 그 외 피드백 주시면 감사하겠습니다.😊")
+    st.markdown("아이디어도 환영합니다!")
     st.markdown("본 피드백은 IP 등의 사용자의 정보를 수집하지 않습니다.")
-    name = st.text_input("이름(아무거나 적으셔도 무방합니다.):")
+    name = st.text_input("이름(적지 않으셔도 무방합니다.):")
     feedback = st.text_area("피드백을 작성해주세요.")
     
     if st.button("제출"):
         if not name.strip():
-            st.warning("이름을 입력해주세요.")
-            return
+            # st.warning("이름을 입력해주세요.")
+            name = "익명"
         if not feedback.strip():
             st.warning("피드백을 입력해주세요.")
             return
@@ -412,6 +413,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
