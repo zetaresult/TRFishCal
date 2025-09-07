@@ -8,13 +8,22 @@ from google.oauth2.service_account import Credentials
 from datetime import datetime
 
 
-SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=SCOPE)
-client = gspread.authorize(creds)
+def connect_to_gsheet():
+        
+    SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=SCOPE)
+    client = gspread.authorize(creds)
+    
+    SHEET_NAME = "trfish-feedback"
+    sheet = client.open(SHEET_NAME).sheet1
 
-SHEET_NAME = "trfish-feedback"
-sheet = client.open(SHEET_NAME).sheet1
-
+    return sheet
+    
+def save_feedback(name, feedback):
+    sheet = connect_to_gsheet()
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    sheet.append_row([name, feedback, now])
+    
 def levelExpected(currentLevel, goalLevel, currentPer, pageTotal):
     levelData = np.load('lvlExp.npy', allow_pickle=True)
     currentEXP = levelData[currentLevel][2] + (levelData[currentLevel][1] * (currentPer/100)) + pageTotal
@@ -50,6 +59,7 @@ def formatTime(totalSeconds):
     if not parts:  # 전부 0인 경우
         return "0분"
     return " ".join(parts)
+    
 @st.dialog("예약종료 사용법")
 def scheduleInfo():
     st.markdown("""
@@ -60,6 +70,24 @@ def scheduleInfo():
 > 반드시 낚싯대와 낚시 프렌즈를 선택 후 예약 종료 명령어를 입력 바랍니다.  
 > (명령어 끝이 0일 경우, 컴퓨터가 강제 종료됩니다.)
 """)
+
+@st.dialog("피드백 작성")
+def feedback_dialog():
+    st.markdown("추가할 아이템이나 그 외 피드백 주시면 감사하겠습니다.😊")
+    name = st.text_input("닉네임(아무거나 입력하시면 됩니다.):")
+    feedback = st.text_area("피드백을 작성해주세요.")
+    
+    if st.button("제출"):
+        if not name.strip():
+            st.warning("이름을 입력해주세요.")
+            return
+        if not feedback.strip():
+            st.warning("피드백을 입력해주세요.")
+            return
+        save_feedback(name, feedback)
+        st.success("피드백 감사합니다!")
+        st.session_state.feedback_submitted = True
+        st.experimental_rerun()
 
 
 Tbaits = [
@@ -123,13 +151,15 @@ menu = st.sidebar.radio(
     index = 0 # 기본값
 )
 if menu == "경험치 및 낚시 계산기":
-    col1, col2 = st.columns([4,1])
+    col1, col2 = st.columns([3,1])
     with col1:
         st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>레벨 경험치 계산", unsafe_allow_html=True)
     with col2:
         if st.button("피드백"):
-            st.write("피드백 버튼 클릭됨!")
-        
+            feedback_dialog()
+    if st.session_state.get("feedback_submitted", False):
+    st.info("피드백이 성공적으로 제출되었습니다.")
+    
     st.write(" ")
     levelName = np.load("lvlExp.npy", allow_pickle=True)
     levelName = levelName[:,0]
@@ -375,6 +405,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
