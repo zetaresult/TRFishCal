@@ -9,7 +9,7 @@ from datetime import datetime
 
 
 SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scopes)
+creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=SCOPE)
 client = gspread.authorize(creds)
 
 SHEET_NAME = "trfish-feedback"
@@ -375,6 +375,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
