@@ -87,7 +87,7 @@ def feedback_dialog():
         save_feedback(name, feedback)
         st.success("피드백 감사합니다!")
         st.session_state.feedback_submitted = True
-        st.experimental_rerun()
+
 
 
 Tbaits = [
@@ -158,7 +158,8 @@ if menu == "경험치 및 낚시 계산기":
         if st.button("피드백"):
             feedback_dialog()
     if st.session_state.get("feedback_submitted", False):
-            st.info("피드백이 성공적으로 제출되었습니다.")
+            st.success("피드백 감사합니다! 🎉")
+            st.session_state.feedback_submitted = False
     
     st.write(" ")
     levelName = np.load("lvlExp.npy", allow_pickle=True)
@@ -405,6 +406,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
