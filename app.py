@@ -5,7 +5,7 @@ import pandas as pd
 
 import gspread
 from google.oauth2.service_account import Credentials
-from datetime import datetime
+import datetime
 
 
 def connect_to_gsheet():
@@ -405,6 +405,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
