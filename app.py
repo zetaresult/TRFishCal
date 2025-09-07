@@ -3,6 +3,18 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
+import gspread
+from google.oauth2.service_account import Credentials
+from datetime import datetime
+
+
+SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scopes)
+client = gspread.authorize(creds)
+
+SHEET_NAME = "trfish-feedback"
+sheet = client.open(SHEET_NAME).sheet1
+
 def levelExpected(currentLevel, goalLevel, currentPer, pageTotal):
     levelData = np.load('lvlExp.npy', allow_pickle=True)
     currentEXP = levelData[currentLevel][2] + (levelData[currentLevel][1] * (currentPer/100)) + pageTotal
@@ -111,7 +123,13 @@ menu = st.sidebar.radio(
     index = 0 # 기본값
 )
 if menu == "경험치 및 낚시 계산기":
-    st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>레벨 경험치 계산", unsafe_allow_html=True)
+    col1, col2 = st.columns([4,1])
+    with col1:
+        st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>레벨 경험치 계산", unsafe_allow_html=True)
+    with col2:
+        if st.button("피드백"):
+            st.write("피드백 버튼 클릭됨!")
+        
     st.write(" ")
     levelName = np.load("lvlExp.npy", allow_pickle=True)
     levelName = levelName[:,0]
@@ -357,6 +375,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
