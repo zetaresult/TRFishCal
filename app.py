@@ -74,8 +74,9 @@ def scheduleInfo():
 @st.dialog("피드백 작성")
 def feedback_dialog():
     st.markdown("추가할 아이템이나 그 외 피드백 주시면 감사하겠습니다.😊")
-    name = st.text_input("닉네임(아무거나 입력하시면 됩니다.):")
-    feedback = st.text_area("피드백을 작성해주세요.")
+    st.markdown("본 피드백은 IP 등의 사용자의 정보를 수집하지 않습니다.")
+    name = st.text_input("이름(아무거나 적으셔도 무방합니다.):", key="name_input")
+    feedback = st.text_area("피드백을 작성해주세요.", key="feedback_input")
     
     if st.button("제출"):
         if not name.strip():
@@ -87,7 +88,10 @@ def feedback_dialog():
         save_feedback(name, feedback)
         st.success("피드백 감사합니다! 🎉")
         st.session_state.feedback_submitted = True
+        st.session_state["name_input"] = ""
+        st.session_state["feedback_input"] = ""
 
+        st.session_state.feedback_submitted = True
 
 
 Tbaits = [
@@ -406,6 +410,7 @@ elif menu == "경험치 ↔ 지렁이":
 
     
     
+
 
 
 
