@@ -47,6 +47,7 @@ def levelExpected(currentLevel, goalLevel, currentPer, pageTotal):
         nowPer = (levelData[expectedLvl][1] - (levelData[expectedLvl+1][2] - currentEXP)) * (100 / levelData[expectedLvl][1])
     return expectedLvl ,expRequired, nowPer
 def calcBait(FTime): return sum(FTime) / 2
+    
 def formatTime(totalSeconds):
     days = int(totalSeconds // (60 * 60 * 24))
     hours = int((totalSeconds % (60 * 60 * 24)) // (60 * 60))
@@ -415,71 +416,3 @@ elif menu == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
