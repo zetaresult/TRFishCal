@@ -1,4 +1,4 @@
-%%writefile app.py
+# %%writefile app.py
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -455,3 +455,4 @@ elif menu == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
