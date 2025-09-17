@@ -180,8 +180,8 @@ if menu == "경험치 및 낚시 계산기":
 
 
     cols = st.columns([1,1.5,1])
-    Ccolor = cols[0].selectbox("현재 레벨", levelColor)
-    Cshoes = cols[1].selectbox("", levelShoes)
+    Ccolor = cols[0].selectbox("현재 레벨", levelColor, accept_new_options=False)
+    Cshoes = cols[1].selectbox("", levelShoes, accept_new_options=False)
     currentPer_str = cols[2].text_input("경험치 ( % )", value="0.0")
     
     selectCLevel = Ccolor+Cshoes
