@@ -205,10 +205,7 @@ if menu == "경험치 및 낚시 계산기":
         currentPer = 0.0
     
     ClevelIndex = (np.where(levelName == selectCLevel)[0][0]) 
-    
-    
-    # currentPer = st.number_input("현재 경험치(%) 입력", min_value=0.0, max_value=100.0, value=0.0, step=0.01) # 버전이 달라지고 에러 생김
-    
+
 
     try:
         currentPer = float(currentPer_str)
@@ -241,7 +238,6 @@ if menu == "경험치 및 낚시 계산기":
     </style>
     """, unsafe_allow_html=True)
     
-    # useGoalLevel = st.checkbox("목표 레벨 계산", value=True) # 체크해제하고 쓸 사람은 없을듯 하여 삭제
     useGoalLevel = True
     cols = st.columns([1,1.5,1])
     if useGoalLevel:
@@ -250,7 +246,6 @@ if menu == "경험치 및 낚시 계산기":
         Gshoes = cols[1].selectbox("", levelShoes, key="goal_shoes", accept_new_options=False)
         selectGLevel = Gcolor+Gshoes
         cols[2].markdown("")
-        # selectGLevel = st.selectbox("목표 레벨", levelName)
         GlevelIndex = (np.where(levelName == selectGLevel)[0][0])
     else:
         st.write("목표 레벨을 통해 계산하려면 위 체크박스를 체크해주세요.")
@@ -330,10 +325,8 @@ if menu == "경험치 및 낚시 계산기":
     min_default, max_default, storage_default = fishing_rods[rod]
     f_min, f_max, f_storage = fishing_friends[friend]
     
-    # min_default -= f_min
-    # max_default -= f_max
-    min_default = max(0, min_default - f_min) # 에러처리를 위함
-    max_default = max(0, max_default - f_max) # 프렌즈를 먼저 고를 경우 음수로 에러남.
+    min_default = max(0, min_default - f_min) 
+    max_default = max(0, max_default - f_max) 
     storage_default += f_storage
     
     
@@ -346,7 +339,7 @@ if menu == "경험치 및 낚시 계산기":
     fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
     
     f_average_sec = (minFTime+maxFTime)/2
-    if rod == '테런 낚싯대': f_average_sec /= 1.7 # 보정
+    if rod == '테런 낚싯대': f_average_sec /= 1.8
     
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {f_average_sec:.1f}초</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {formatTime(f_average_sec*fishStorage)}</div>", unsafe_allow_html=True)
@@ -449,4 +442,5 @@ elif menu == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
