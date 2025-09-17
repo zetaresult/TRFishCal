@@ -403,38 +403,7 @@ if menu == "경험치 및 낚시 계산기":
     
         st.markdown("##### 캐시 지렁이")
         render_bait_cards(Cbaits, expRequired, isCash=True)
-
-# elif menu == "테런 낚싯대 계산기":
-#     st.title("테런 낚싯대 예상")
-#     rod_times = st.selectbox("테런 낚싯대 시간 팩", ["15분", "30분", "1시간"])
-
-#     if rod_times == "15분" : rod_seconds = 15*60 
-#     elif rod_times == "30분": rod_seconds = 30*60
-#     elif rod_times == "1시간": rod_seconds = 60*60
-    
-#     friend2 = st.selectbox("낚시 프렌즈를 선택하세요 (가나다순)", ordered_friends_keys, index=0)
-#     f_min2, f_max2, _ = fishing_friends[friend2]
-
-    
-#     min_default2 = 15 - f_min2
-#     max_default2 = 20 - f_max2
-    
-#     all_baits = Tbaits + Cbaits
-#     bait_names = [bait["name"] for bait in all_baits]
-#     selected_name = st.selectbox("지렁이를 선택하세요", bait_names)
-    
-#     selected_bait = next(b for b in all_baits if b["name"] == selected_name)
-#     selected_exp = selected_bait["exp"]
-
-#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 전: 한 마리당 약 {(min_default2+max_default2)/2}초이며, 약 {round(rod_seconds/((min_default2+max_default2)/2)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
-#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round(rod_seconds/((min_default2+max_default2)/2)):,}개는 {round(selected_exp * round(rod_seconds/((min_default2+max_default2)/2))):,}EXP입니다.</div>", unsafe_allow_html=True)
-#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
-#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: 한 마리당 약 {(((min_default2+max_default2)/2)/1.8):.2f}초이며, 약 {round((rod_seconds/((min_default2+max_default2)/2)*1.8)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
-#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round((rod_seconds/((min_default2+max_default2)/2))*1.8):,}개는 {round(selected_exp * round((rod_seconds/((min_default2+max_default2)/2)*1.8))):,}EXP입니다.</div>", unsafe_allow_html=True)
-#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
-#     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
-#     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
-
+        
 elif menu == "경험치 ↔ 지렁이":
 
     def set_mode_xp_to_worms():
@@ -480,3 +449,4 @@ elif menu == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
