@@ -7,6 +7,9 @@ import gspread
 from google.oauth2.service_account import Credentials
 import datetime
 
+from streamlit_javascript import st_javascript
+
+
 st.set_page_config(
     page_title="테일즈런너 종합계산기",
     page_icon="🎣"
@@ -174,18 +177,31 @@ if menu == "경험치 및 낚시 계산기":
     
     levelColor =  ["빨강 ", "주황 ", "노랑 ", "초록 ", "파랑 ", "남색 ", "보라 "]
     levelShoes = [' '.join(levelName[i].split()[1:]) for i in range(0,len(levelName), 7)]
-    
-    cols = st.columns(2)
+
+
+    cols = st.columns([1,1.5,1])
     Ccolor = cols[0].selectbox("현재 레벨", levelColor)
     Cshoes = cols[1].selectbox("", levelShoes)
-    # selectCLevel = st.selectbox("현재 레벨 입력", levelName)
+    currentPer_str = cols[2].text_input("경험치 ( % )", value="0.0")
+    
     selectCLevel = Ccolor+Cshoes
+    try:
+        currentPer = float(currentPer_str)
+        if currentPer >= 100:
+                st.error("100 미만의 숫자를 입력해주세요.")
+                currentPer = 0.0
+        elif currentPer < 0:
+                st.error("0 이상의 숫자를 입력해주세요.")
+                currentPer = 0.0
+    except ValueError:
+        st.error("숫자를 입력해주세요.")
+        currentPer = 0.0
     
     ClevelIndex = (np.where(levelName == selectCLevel)[0][0]) 
     
     
     # currentPer = st.number_input("현재 경험치(%) 입력", min_value=0.0, max_value=100.0, value=0.0, step=0.01) # 버전이 달라지고 에러 생김
-    currentPer_str = st.text_input("현재 경험치(%) 입력", value="0.0")
+    
 
     try:
         currentPer = float(currentPer_str)
@@ -199,35 +215,54 @@ if menu == "경험치 및 낚시 계산기":
         st.error("숫자를 입력해주세요.")
         currentPer = 0.0
     
-    
+    st.markdown("""
+    <style>
+        @media (max-width: 600px) {
+            div[data-testid="stHorizontalBlock"] {
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            div[data-testid="stHorizontalBlock"] > div {
+                display: inline-block !important;
+                vertical-align: top;
+                float: none !important;
+                white-space: normal;
+                min-width: 150px;
+            }
+        }
+    </style>
+    """, unsafe_allow_html=True)
     
     # useGoalLevel = st.checkbox("목표 레벨 계산", value=True) # 체크해제하고 쓸 사람은 없을듯 하여 삭제
     useGoalLevel = True
-    cols = st.columns(2)
+    cols = st.columns([1,1.5,1])
     if useGoalLevel:
         
         Gcolor = cols[0].selectbox("목표 레벨", levelColor, key="goal_color")
         Gshoes = cols[1].selectbox("", levelShoes, key="goal_shoes")
         selectGLevel = Gcolor+Gshoes
+        cols[2].markdown("")
         # selectGLevel = st.selectbox("목표 레벨", levelName)
         GlevelIndex = (np.where(levelName == selectGLevel)[0][0])
     else:
         st.write("목표 레벨을 통해 계산하려면 위 체크박스를 체크해주세요.")
         selectGLevel, GlevelIndex = -1, -1
     
-    st.write(" ")
-    st.write("낚시 페이지 계산")
-    # useFishPage = st.checkbox("낚시 페이지 계산", value=False) # 체크해제하고 쓸 사람은 없을듯 하여 삭제
-    useFishPage= True 
+    
+    useFishPage = st.checkbox("낚시 페이지 계산", value=False)
     if useFishPage:
-        cols = st.columns(3)
+        st.write(" ")
+        st.write("낚시 페이지 계산")
+        cols = st.columns([1,1])
         page1 = cols[0].number_input("페이지1 입력", min_value=0, value=0, step=1)
         page2 = cols[1].number_input("페이지2 입력", min_value=0, value=0, step=1)
-        page3 = cols[2].number_input("페이지3 입력", min_value=0, value=0, step=1)
-        cols2 = st.columns(3)
-        page4 = cols2[0].number_input("페이지4 입력", min_value=0, value=0, step=1)
-        page5 = cols2[1].number_input("페이지5 입력", min_value=0, value=0, step=1)
-        page6 = cols2[2].number_input("페이지6 입력", min_value=0, value=0, step=1)
+        cols2 = st.columns([1,1])
+        page3 = cols2[0].number_input("페이지3 입력", min_value=0, value=0, step=1)
+        page4 = cols2[1].number_input("페이지4 입력", min_value=0, value=0, step=1)
+        cols3 = st.columns([1,1])
+        page5 = cols2[0].number_input("페이지5 입력", min_value=0, value=0, step=1)
+        page6 = cols2[1].number_input("페이지6 입력", min_value=0, value=0, step=1)
         totalPage = page1+page2+page3+page4+page5+page6
     else:
         totalPage = 0
