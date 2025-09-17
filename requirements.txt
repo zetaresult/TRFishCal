@@ -1,3 +1,5 @@
 streamlit
 google-auth
+
 gspread
+streamlit_javascript
