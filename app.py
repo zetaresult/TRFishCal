@@ -10,7 +10,7 @@ import datetime
 
 
 from streamlit_javascript import st_javascript
-
+import base64 
 
 st.set_page_config(
     page_title="테일즈런너 종합계산기",
@@ -100,6 +100,11 @@ def feedback_dialog():
         save_feedback(name, feedback)
         st.success("피드백 감사합니다! 🎉")
         st.session_state.feedback_submitted = True
+
+def get_image_base64(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
 
 
 Tbaits = [
@@ -275,7 +280,7 @@ if menu == "경험치 및 낚시 계산기":
     
     if expRequired != -1: 
         barText = f"{nowPer:.2f}% ({expRequired:,} EXP 남음)"
-        if (useGoalLevel) and (expRequired == 0): barText = f"{nowPer:.2f}% [목표레벨 달성!]"
+        if (useGoalLevel) and (expRequired == 0): barText = f"{nowPer:.2f}%"
     else: barText = f"{nowPer:.2f}%"
     
     bar_html = f"""
@@ -289,8 +294,22 @@ if menu == "경험치 및 낚시 계산기":
         </div>
     </div>
     """
+
+    #이미지 출력 위함
+
+    image_path = f"./level/{expectedLvl}.png"
+    img_base64 = get_image_base64(image_path)
     
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>현재 예상 레벨: {levelName[expectedLvl]}</div>", unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div style='font-size: 18px; font-weight: bold; margin-top: 12px; display: flex; align-items: center;'>
+            현재 예상 레벨 :
+            <img src='data:image/png;base64,{img_base64}' style='height: 1.1em; margin: 0 5px;'/>
+            <span style='font-size: 14px; font-weight: bold;'>{levelName[expectedLvl]}</span>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
     st.markdown(bar_html, unsafe_allow_html=True)
     
     ###### 지렁이 계산은 코인, 쓰레기 제외
@@ -342,42 +361,48 @@ if menu == "경험치 및 낚시 계산기":
     st.write(" ")
     st.write(" ")
     
+    def render_bait_cards(baits, expRequired, isCash=False):
+        cols = st.columns(2)  # 2열 생성
+    
+        for i, bait in enumerate(baits):
+            count = round(expRequired / bait["exp"])
+            total = count * (49 if isCash else bait["tr"])
+            totalSeconds = count * calcBait([minFTime, maxFTime])
+    
+            with cols[i % 2]:
+                st.markdown(f"""
+                <table style="width:100%; border-collapse: collapse; font-size:13px; line-height:1.6; margin-bottom:16px;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left; padding:8px; font-size:16px;" colspan="2">{bait['name']}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:8px; width:50%;"><b>개수:</b></td>
+                            <td style="padding:8px;">{count:,}개</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px;"><b>{'총 캐시:' if isCash else '총 TR:'}</b></td>
+                            <td style="padding:8px;">{total:,} {'캐시' if isCash else 'TR'}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px;"><b>예상 시간:</b></td>
+                            <td style="padding:8px;">{formatTime(totalSeconds)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                """, unsafe_allow_html=True)
+
+
     if useGoalLevel:
-        
-        TbaitData = []
-        for bait in Tbaits:
-            count = round(expRequired / bait["exp"])
-            totalTR = count * bait["tr"]
-            totalSeconds = count * calcBait([minFTime, maxFTime])
-            TbaitData.append({
-                "이름": bait["name"],
-                "필요한 지렁이 개수": f"{count:,}개",
-                "총 TR": f"{totalTR:,} TR",
-                "예상 소요 시간": formatTime(totalSeconds),
-            })
+        st.markdown("#### 목표 레벨에 필요한 지렁이 정보")
     
-        df_tbait = pd.DataFrame(TbaitData).set_index("이름")
-        # st.subheader("일반 지렁이")
-        st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>목표 레벨에 필요한 지렁이 정보</div>", unsafe_allow_html=True)
-        st.write(" ")
-        st.dataframe(df_tbait, use_container_width=True)
-        
-        CbaitData = []
-        for bait in Cbaits:
-            count = round(expRequired / bait["exp"])
-            totalC = count * 49
-            totalSeconds = count * calcBait([minFTime, maxFTime])
-            CbaitData.append({
-                "이름": bait["name"],
-                "필요한 지렁이 개수": f"{count:,}개",
-                "총 캐시": f"{totalC:,} 캐시",
-                "예상 소요 시간": formatTime(totalSeconds),
-            })
-        
-        df_cbait = pd.DataFrame(CbaitData).set_index("이름")
-        # st.subheader("캐시 지렁이")
+        st.markdown("##### 일반 지렁이")
+        render_bait_cards(Tbaits, expRequired, isCash=False)
     
-        st.dataframe(df_cbait, use_container_width=True)
+        st.markdown("##### 캐시 지렁이")
+        render_bait_cards(Cbaits, expRequired, isCash=True)
 
 # elif menu == "테런 낚싯대 계산기":
 #     st.title("테런 낚싯대 예상")
@@ -455,4 +480,3 @@ elif menu == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
-
