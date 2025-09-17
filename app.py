@@ -298,7 +298,7 @@ if menu == "경험치 및 낚시 계산기":
     st.markdown(
         f"""
         <div style='font-size: 18px; font-weight: bold; margin-top: 12px; display: flex; align-items: center;'>
-            현재 예상 레벨 :
+            예상 레벨 :
             <img src='data:image/png;base64,{img_base64}' style='height: 1.1em; margin: 0 5px;'/>
             <span style='font-size: 14px; font-weight: bold;'>{levelName[expectedLvl]}</span>
         </div>
@@ -442,5 +442,6 @@ elif menu == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
