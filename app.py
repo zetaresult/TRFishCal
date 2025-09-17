@@ -1,11 +1,13 @@
-# %%writefile app.py
+%%writefile app.py
 import streamlit as st
 import numpy as np
 import pandas as pd
+import math
 
 import gspread
 from google.oauth2.service_account import Credentials
 import datetime
+
 
 from streamlit_javascript import st_javascript
 
@@ -121,7 +123,7 @@ Cbaits = [
 #### 낚싯대
 
 fishing_rods = {
-    "낚싯대 선택(추가 예정)": (0, 0, 0),
+    "낚싯대 선택": (0, 0, 0),
     "죽도 낚싯대": (40, 80, 0),
     "천사의 낚싯대": (30, 90, 100),
     "악마의 낚싯대": (50, 70, 100),
@@ -132,11 +134,11 @@ fishing_rods = {
     "대나무 낚싯대": (60, 120, 0),
 }
 
-sorted_rods_keys = sorted(k for k in fishing_rods if k != "낚싯대 선택(추가 예정)")
-ordered_rods_keys = ["낚싯대 선택(추가 예정)"] + sorted_rods_keys
+sorted_rods_keys = sorted(k for k in fishing_rods if k != "낚싯대 선택")
+ordered_rods_keys = ["낚싯대 선택"] + sorted_rods_keys
 
 fishing_friends = {
-    "낚시 프렌즈 선택(추가 예정)" : (0, 0, 0),
+    "낚시 프렌즈" : (0, 0, 0),
     "화이트 똑똑 쥐돌이": (0, 8, 60),
     "토집사와 아기토끼": (10, 0, 100),
     "미드나잇 쿠션냥": (4, 4, 80),
@@ -150,14 +152,14 @@ fishing_friends = {
     "화이트 헝그리베어": (3, 3, 20),
 }
 
-sorted_friends_keys = sorted(k for k in fishing_friends if k != "낚시 프렌즈 선택(추가 예정)")
-ordered_friends_keys = ["낚시 프렌즈 선택(추가 예정)"] + sorted_friends_keys
+sorted_friends_keys = sorted(k for k in fishing_friends if k != "낚시 프렌즈")
+ordered_friends_keys = ["낚시 프렌즈"] + sorted_friends_keys
 
 
 st.sidebar.title("테일즈런너 유틸모음")
 menu = st.sidebar.radio(
     "메뉴 선택 (추후 추가 예정)",
-    ["경험치 및 낚시 계산기", "테런 낚싯대 계산기", "경험치 ↔ 지렁이"],
+    ["경험치 및 낚시 계산기", "경험치 ↔ 지렁이"],
     index = 0 # 기본값
 )
 if menu == "경험치 및 낚시 계산기":
@@ -239,8 +241,8 @@ if menu == "경험치 및 낚시 계산기":
     cols = st.columns([1,1.5,1])
     if useGoalLevel:
         
-        Gcolor = cols[0].selectbox("목표 레벨", levelColor, key="goal_color")
-        Gshoes = cols[1].selectbox("", levelShoes, key="goal_shoes")
+        Gcolor = cols[0].selectbox("목표 레벨", levelColor, key="goal_color", accept_new_options=False)
+        Gshoes = cols[1].selectbox("", levelShoes, key="goal_shoes", accept_new_options=False)
         selectGLevel = Gcolor+Gshoes
         cols[2].markdown("")
         # selectGLevel = st.selectbox("목표 레벨", levelName)
@@ -296,15 +298,16 @@ if menu == "경험치 및 낚시 계산기":
     
     
     st.write(" ")
-    st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 미끼 계산", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 지렁이 계산", unsafe_allow_html=True)
     
     st.write(" ")
     premium_storage = st.checkbox("프리미엄 티켓", value=False)
-    rod = st.selectbox("낚싯대 종류를 선택하세요 (가나다순)", ordered_rods_keys, index=0)
+    cols = st.columns(2)
+    rod = cols[0].selectbox("낚싯대 종류 (가나다순)", ordered_rods_keys, index=0)
     if rod == "테런 낚싯대": 
-        st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>테런 낚싯대 계산은 정확하지 않습니다. 왼쪽 위 화살표에서 메뉴를 확인해주세요.</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>테런 낚싯대 계산은 편차가 심합니다.</div>", unsafe_allow_html=True)
         st.write(" ")
-    friend = st.selectbox("낚시 프렌즈를 선택하세요 (가나다순)", ordered_friends_keys, index=0)
+    friend = cols[1].selectbox("낚시 프렌즈 (가나다순)", ordered_friends_keys, index=0)
     min_default, max_default, storage_default = fishing_rods[rod]
     f_min, f_max, f_storage = fishing_friends[friend]
     
@@ -323,12 +326,13 @@ if menu == "경험치 및 낚시 계산기":
     else: storage_default += 150
     fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
     
+    f_average_sec = (minFTime+maxFTime)/2
+    if rod == '테런 낚싯대': f_average_sec /= 1.7 # 보정
     
-    
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {(minFTime+maxFTime)/2}초</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {formatTime((((minFTime+maxFTime)/2)*fishStorage))}</div>", unsafe_allow_html=True)
-    
-    if round((((minFTime+maxFTime)/2)*fishStorage)) != 0 : st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>컴퓨터 예약 종료 명령어 : shutdown -s -t {round((((minFTime+maxFTime)/2)*fishStorage))}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {f_average_sec:.1f}초</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {formatTime(f_average_sec*fishStorage)}</div>", unsafe_allow_html=True)
+
+    if round((f_average_sec*fishStorage)) != 0 : st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>컴퓨터 예약 종료 명령어 : shutdown -s -t {round((f_average_sec)*fishStorage)}</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 취소 명령어 : shutdown -a</div>", unsafe_allow_html=True)
     
     st.write(" ")
@@ -375,36 +379,36 @@ if menu == "경험치 및 낚시 계산기":
     
         st.dataframe(df_cbait, use_container_width=True)
 
-elif menu == "테런 낚싯대 계산기":
-    st.title("테런 낚싯대 예상")
-    rod_times = st.selectbox("테런 낚싯대 시간 팩", ["15분", "30분", "1시간"])
+# elif menu == "테런 낚싯대 계산기":
+#     st.title("테런 낚싯대 예상")
+#     rod_times = st.selectbox("테런 낚싯대 시간 팩", ["15분", "30분", "1시간"])
 
-    if rod_times == "15분" : rod_seconds = 15*60 
-    elif rod_times == "30분": rod_seconds = 30*60
-    elif rod_times == "1시간": rod_seconds = 60*60
+#     if rod_times == "15분" : rod_seconds = 15*60 
+#     elif rod_times == "30분": rod_seconds = 30*60
+#     elif rod_times == "1시간": rod_seconds = 60*60
     
-    friend2 = st.selectbox("낚시 프렌즈를 선택하세요 (가나다순)", ordered_friends_keys, index=0)
-    f_min2, f_max2, _ = fishing_friends[friend2]
+#     friend2 = st.selectbox("낚시 프렌즈를 선택하세요 (가나다순)", ordered_friends_keys, index=0)
+#     f_min2, f_max2, _ = fishing_friends[friend2]
 
     
-    min_default2 = 15 - f_min2
-    max_default2 = 20 - f_max2
+#     min_default2 = 15 - f_min2
+#     max_default2 = 20 - f_max2
     
-    all_baits = Tbaits + Cbaits
-    bait_names = [bait["name"] for bait in all_baits]
-    selected_name = st.selectbox("지렁이를 선택하세요", bait_names)
+#     all_baits = Tbaits + Cbaits
+#     bait_names = [bait["name"] for bait in all_baits]
+#     selected_name = st.selectbox("지렁이를 선택하세요", bait_names)
     
-    selected_bait = next(b for b in all_baits if b["name"] == selected_name)
-    selected_exp = selected_bait["exp"]
+#     selected_bait = next(b for b in all_baits if b["name"] == selected_name)
+#     selected_exp = selected_bait["exp"]
 
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 전: 한 마리당 약 {(min_default2+max_default2)/2}초이며, 약 {round(rod_seconds/((min_default2+max_default2)/2)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round(rod_seconds/((min_default2+max_default2)/2)):,}개는 {round(selected_exp * round(rod_seconds/((min_default2+max_default2)/2))):,}EXP입니다.</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: 한 마리당 약 {(((min_default2+max_default2)/2)/1.7):.2f}초이며, 약 {round((rod_seconds/((min_default2+max_default2)/2)*1.8)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round((rod_seconds/((min_default2+max_default2)/2))*1.8):,}개는 {round(selected_exp * round((rod_seconds/((min_default2+max_default2)/2)*1.8))):,}EXP입니다.</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
+#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 전: 한 마리당 약 {(min_default2+max_default2)/2}초이며, 약 {round(rod_seconds/((min_default2+max_default2)/2)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
+#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round(rod_seconds/((min_default2+max_default2)/2)):,}개는 {round(selected_exp * round(rod_seconds/((min_default2+max_default2)/2))):,}EXP입니다.</div>", unsafe_allow_html=True)
+#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
+#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>보정 후: 한 마리당 약 {(((min_default2+max_default2)/2)/1.8):.2f}초이며, 약 {round((rod_seconds/((min_default2+max_default2)/2)*1.8)):,}개 소모됩니다.</div>", unsafe_allow_html=True)
+#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name} {round((rod_seconds/((min_default2+max_default2)/2))*1.8):,}개는 {round(selected_exp * round((rod_seconds/((min_default2+max_default2)/2)*1.8))):,}EXP입니다.</div>", unsafe_allow_html=True)
+#     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>---------------------------------------</div>", unsafe_allow_html=True)
+#     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>보정 전은 15~20초 평균 기준으로 계산하였으나 실 어획물과 차이가 있어 보정 계수를 추가했습니다.</div>", unsafe_allow_html=True)
+#     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>(지금도 정확하지는 않아 개선예정)</div>", unsafe_allow_html=True)
 
 elif menu == "경험치 ↔ 지렁이":
 
@@ -436,7 +440,7 @@ elif menu == "경험치 ↔ 지렁이":
         target_xp = st.number_input("목표 경험치 입력", min_value=0, value=0, step=1)
 
         if target_xp > 0:
-            st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name2} : 약 {round(target_xp//selected_exp):,}개가 필요합니다.</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name2} : 약 {math.ceil(target_xp/selected_exp):,}개가 필요합니다.</div>", unsafe_allow_html=True)
             
 
     elif mode == "worms_to_xp":
