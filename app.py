@@ -1,6 +1,14 @@
 # %%writefile app.py
 
 import trlib as tr
+from trdata import (
+    T_BAITS, 
+    C_BAITS, 
+    FISHING_RODS, 
+    FISHING_FRIENDS, 
+    ORDERED_ROD_KEYS, 
+    ORDERED_FRIENDS_KEYS,
+)
 
 import streamlit as st
 import numpy as np
@@ -11,60 +19,6 @@ st.set_page_config(
     page_title="테일즈런너 종합계산기",
     page_icon="🎣"
 )
-
-T_BAITS = [
-    {"name": "삼각 주먹떡밥", "exp": 153, "tr": 20},
-    {"name": "크릴 새우 필라프", "exp": 703, "tr": 100},
-    {"name": "갯지렁이 훈제 구이", "exp": 2363, "tr": 500},
-    {"name": "황금 갯지렁이", "exp": 5644, "tr": 1500},
-    {"name": "다이아 갯지렁이", "exp": 10701, "tr": 5000},
-    ]
-
-C_BAITS = [
-    {"name": "황제 지렁이", "exp": 19562},
-    {"name": "장군 지렁이", "exp": 21658},
-    {"name": "여왕 지렁이", "exp": 22056},
-    {"name": "승리의 지렁이", "exp": 21972},
-    {"name": "선샤인 지렁이", "exp": 22124},
-    {"name": "별빛 지렁이", "exp": 22223},
-    {"name": "해왕강림 지렁이", "exp": 22189},
-    ]
-
-#### 낚싯대
-
-FISHING_RODS = {
-    "낚싯대 선택": (0, 0, 0),
-    "죽도 낚싯대": (40, 80, 0),
-    "천사의 낚싯대": (30, 90, 100),
-    "악마의 낚싯대": (50, 70, 100),
-    "매직 스타 낚싯대": (40, 70, 50),
-    "푸른 장미검 낚싯대": (30, 80, 50),
-    "테런 낚싯대": (15, 20, 150),
-    "강태공의 낚싯대": (60, 100, 0),
-    "대나무 낚싯대": (60, 120, 0),
-}
-
-SORTED_RODS_KEYS = sorted(k for k in FISHING_RODS if k != "낚싯대 선택")
-ORDERED_ROD_KEYS = ["낚싯대 선택"] + SORTED_RODS_KEYS
-
-FISHING_FRIENDS = {
-    "낚시 프렌즈" : (0, 0, 0),
-    "화이트 똑똑 쥐돌이": (0, 8, 60),
-    "토집사와 아기토끼": (10, 0, 100),
-    "미드나잇 쿠션냥": (4, 4, 80),
-    "밀덕이는 낚시 중": (5, 0, 140),
-    "쌀덕이는 낚시 중": (0, 10, 120),
-    "낚시중": (2, 2, 15),
-    "화이트 재롱둥이 물개": (2, 2, 40),
-    "블랙 재롱둥이 물개": (0, 5, 30),
-    "옐로우 헝그리베어": (0, 6, 20),
-    "핑크 헝그리베어": (6, 0, 20),
-    "화이트 헝그리베어": (3, 3, 20),
-}
-
-SORTED_FRIENDS_KEYS = sorted(k for k in FISHING_FRIENDS if k != "낚시 프렌즈")
-ORDERED_FRIENDS_KEYS = ["낚시 프렌즈"] + SORTED_FRIENDS_KEYS
-
 
 st.sidebar.title("테일즈런너 유틸모음")
 MENU = st.sidebar.radio(
