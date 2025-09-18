@@ -1,113 +1,18 @@
-# %%writefile app.py
+%%writefile app.py
+
+import trlib as tr
+
 import streamlit as st
 import numpy as np
-import pandas as pd
 import math
 
-import gspread
-from google.oauth2.service_account import Credentials
-import datetime
-
-
-from streamlit_javascript import st_javascript
-import base64 
 
 st.set_page_config(
     page_title="테일즈런너 종합계산기",
     page_icon="🎣"
 )
 
-def connect_to_gsheet():
-        
-    SCOPE = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-    creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=SCOPE)
-    client = gspread.authorize(creds)
-    
-    SHEET_NAME = "trfish-feedback"
-    sheet = client.open(SHEET_NAME).sheet1
-
-    return sheet
-    
-def save_feedback(name, feedback):
-    sheet = connect_to_gsheet()
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    sheet.append_row([name, feedback, now])
-    
-def levelExpected(currentLevel, goalLevel, currentPer, pageTotal):
-    levelData = np.load('lvlExp.npy', allow_pickle=True)
-    currentEXP = levelData[currentLevel][2] + (levelData[currentLevel][1] * (currentPer/100)) + pageTotal
-    indices = np.where(levelData[:,2] <= currentEXP)[0]
-    if len(indices) == 0: expectedLvl = 0
-    else: expectedLvl = indices[-1]
-        
-    if goalLevel != -1: 
-        expRequired = int(levelData[goalLevel][2] - currentEXP)
-        if expectedLvl >= goalLevel: expRequired = max(0, expRequired)
-    else: #목표레벨 안쓸경우
-        expRequired = -1 
-
-    if expectedLvl >= len(levelData) - 1:
-        nowPer = 100.0
-    else:
-        nowPer = (levelData[expectedLvl][1] - (levelData[expectedLvl+1][2] - currentEXP)) * (100 / levelData[expectedLvl][1])
-    return expectedLvl ,expRequired, nowPer
-def calcBait(FTime): return sum(FTime) / 2
-    
-def formatTime(totalSeconds):
-    days = int(totalSeconds // (60 * 60 * 24))
-    hours = int((totalSeconds % (60 * 60 * 24)) // (60 * 60))
-    minutes = int((totalSeconds % (60 * 60)) // 60)
-
-    parts = []
-    if days > 0:
-        parts.append(f"{days}일")
-    if hours > 0:
-        parts.append(f"{hours}시간")
-    if minutes > 0:
-        parts.append(f"{minutes}분")
-
-    if not parts:  # 전부 0인 경우
-        return "0분"
-    return " ".join(parts)
-    
-@st.dialog("예약종료 사용법")
-def scheduleInfo():
-    st.markdown("""
-1. 키보드에서 `윈도우키` + `R` 키를 동시에 눌러 `실행` 창을 엽니다.  
-2. 입력 창에 명령어를 붙여넣고 `Enter` 키를 누르세요.  
-
-> ℹ️ 평균적인 시간이므로 실제 어획물과 차이가 있을 수 있습니다.  
-> 반드시 낚싯대와 낚시 프렌즈를 선택 후 예약 종료 명령어를 입력 바랍니다.  
-> (명령어 끝이 0일 경우, 컴퓨터가 강제 종료됩니다.)
-""")
-
-@st.dialog("피드백 작성")
-def feedback_dialog():
-    st.markdown("추가할 아이템이나 그 외 피드백 주시면 감사하겠습니다.😊")
-    st.markdown("아이디어도 환영합니다!")
-    st.markdown("> ℹ️본 피드백은 IP 등 사용자의 어떠한 정보도 수집하지 않습니다.")
-    # name = st.text_input("닉네임 (적지 않으셔도 무방합니다.):") # 굳이 입력 받을 필요 없을 듯
-    name = "익명"
-    feedback = st.text_area("피드백을 작성해주세요.")
-    
-    if st.button("제출"):
-        # if not name.strip():
-        #     # st.warning("이름을 입력해주세요.")
-        #     name = "익명" # 이름 입력받고 싶으면
-        if not feedback.strip():
-            st.warning("피드백을 입력해주세요.")
-            return
-        save_feedback(name, feedback)
-        st.success("피드백 감사합니다! 🎉")
-        st.session_state.feedback_submitted = True
-
-def get_image_base64(file_path):
-    with open(file_path, "rb") as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-
-Tbaits = [
+t_baits = [
     {"name": "삼각 주먹떡밥", "exp": 153, "tr": 20},
     {"name": "크릴 새우 필라프", "exp": 703, "tr": 100},
     {"name": "갯지렁이 훈제 구이", "exp": 2363, "tr": 500},
@@ -115,7 +20,7 @@ Tbaits = [
     {"name": "다이아 갯지렁이", "exp": 10701, "tr": 5000},
     ]
 
-Cbaits = [
+c_baits = [
     {"name": "황제 지렁이", "exp": 19562},
     {"name": "장군 지렁이", "exp": 21658},
     {"name": "여왕 지렁이", "exp": 22056},
@@ -173,51 +78,51 @@ if menu == "경험치 및 낚시 계산기":
         st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>레벨 경험치 계산", unsafe_allow_html=True)
     with col2:
         if st.button("피드백"):
-            feedback_dialog()
+            tr.feedback_dialog()
     if st.session_state.get("feedback_submitted", False):
             # st.success("피드백 감사합니다! 🎉")
             st.session_state.feedback_submitted = False
     
     st.write(" ")
-    levelName = np.load("lvlExp.npy", allow_pickle=True)
-    levelName = levelName[:,0]
+    level_name = np.load("lvlExp.npy", allow_pickle=True)
+    level_name = level_name[:,0]
     
-    levelColor =  ["빨강 ", "주황 ", "노랑 ", "초록 ", "파랑 ", "남색 ", "보라 "]
-    levelShoes = [' '.join(levelName[i].split()[1:]) for i in range(0,len(levelName), 7)]
+    level_color =  ["빨강 ", "주황 ", "노랑 ", "초록 ", "파랑 ", "남색 ", "보라 "]
+    level_shoe = [' '.join(level_name[i].split()[1:]) for i in range(0,len(level_name), 7)]
 
 
     cols = st.columns([1,1.5,1])
-    Ccolor = cols[0].selectbox("현재 레벨", levelColor, accept_new_options=False)
-    Cshoes = cols[1].selectbox("", levelShoes, accept_new_options=False)
-    currentPer_str = cols[2].text_input("경험치 ( % )", value="0.0")
+    cur_color = cols[0].selectbox("현재 레벨", level_color, accept_new_options=False)
+    cur_shoe = cols[1].selectbox("", level_shoe, accept_new_options=False)
+    cur_per_str = cols[2].text_input("경험치 ( % )", value="0.0")
     
-    selectCLevel = Ccolor+Cshoes
+    select_cur_level = cur_color+cur_shoe
     try:
-        currentPer = float(currentPer_str)
-        if currentPer >= 100:
+        current_per = float(cur_per_str)
+        if current_per >= 100:
                 st.error("100 미만의 숫자를 입력해주세요.")
-                currentPer = 0.0
-        elif currentPer < 0:
+                current_per = 0.0
+        elif current_per < 0:
                 st.error("0 이상의 숫자를 입력해주세요.")
-                currentPer = 0.0
+                current_per = 0.0
     except ValueError:
         st.error("숫자를 입력해주세요.")
-        currentPer = 0.0
+        current_per = 0.0
     
-    ClevelIndex = (np.where(levelName == selectCLevel)[0][0]) 
+    cur_level_index = (np.where(level_name == select_cur_level)[0][0]) 
 
 
     try:
-        currentPer = float(currentPer_str)
-        if currentPer >= 100:
+        current_per = float(cur_per_str)
+        if current_per >= 100:
                 st.error("100 미만의 숫자를 입력해주세요.")
-                currentPer = 0.0
-        elif currentPer < 0:
+                current_per = 0.0
+        elif current_per < 0:
                 st.error("0 이상의 숫자를 입력해주세요.")
-                currentPer = 0.0
+                current_per = 0.0
     except ValueError:
         st.error("숫자를 입력해주세요.")
-        currentPer = 0.0
+        current_per = 0.0
     
     st.markdown("""
     <style>
@@ -238,22 +143,22 @@ if menu == "경험치 및 낚시 계산기":
     </style>
     """, unsafe_allow_html=True)
     
-    useGoalLevel = True
+    use_goal_level = True
     cols = st.columns([1,1.5,1])
-    if useGoalLevel:
+    if use_goal_level:
         
-        Gcolor = cols[0].selectbox("목표 레벨", levelColor, key="goal_color", accept_new_options=False)
-        Gshoes = cols[1].selectbox("", levelShoes, key="goal_shoes", accept_new_options=False)
-        selectGLevel = Gcolor+Gshoes
+        goal_color = cols[0].selectbox("목표 레벨", level_color, key="goal_color", accept_new_options=False)
+        goal_shoe = cols[1].selectbox("", level_shoe, key="goal_shoes", accept_new_options=False)
+        select_goal_level = goal_color+goal_shoe
         cols[2].markdown("")
-        GlevelIndex = (np.where(levelName == selectGLevel)[0][0])
+        goal_level_index = (np.where(level_name == select_goal_level)[0][0])
     else:
         st.write("목표 레벨을 통해 계산하려면 위 체크박스를 체크해주세요.")
-        selectGLevel, GlevelIndex = -1, -1
+        select_goal_level, goal_level_index = -1, -1
     
     
-    useFishPage = st.checkbox("낚시 페이지 계산", value=False)
-    if useFishPage:
+    use_fish_page = st.checkbox("낚시 페이지 계산", value=False)
+    if use_fish_page:
         st.write(" ")
         st.write("낚시 페이지 계산")
         cols = st.columns([1,1])
@@ -265,18 +170,18 @@ if menu == "경험치 및 낚시 계산기":
         cols3 = st.columns([1,1])
         page5 = cols2[0].number_input("페이지5 입력", min_value=0, value=0, step=1)
         page6 = cols2[1].number_input("페이지6 입력", min_value=0, value=0, step=1)
-        totalPage = page1+page2+page3+page4+page5+page6
+        total_page = page1+page2+page3+page4+page5+page6
     else:
-        totalPage = 0
+        total_page = 0
         
-    expectedLvl ,expRequired, nowPer = levelExpected(ClevelIndex, GlevelIndex, currentPer, totalPage)
+    expected_level ,exp_required, now_per = tr.level_expected(cur_level_index, goal_level_index, current_per, total_page)
     
-    per = nowPer / 100 * 100  # 0~100%
+    per = now_per / 100 * 100  # 0~100%
     
-    if expRequired != -1: 
-        barText = f"{nowPer:.2f}% ({expRequired:,} EXP 남음)"
-        if (useGoalLevel) and (expRequired == 0): barText = f"{nowPer:.2f}%"
-    else: barText = f"{nowPer:.2f}%"
+    if exp_required != -1: 
+        barText = f"{now_per:.2f}% ({exp_required:,} EXP 남음)"
+        if (use_goal_level) and (exp_required == 0): barText = f"{now_per:.2f}%"
+    else: barText = f"{now_per:.2f}%"
     
     bar_html = f"""
     <div style="width: 100%; background: linear-gradient(90deg, #ddd, #f5f5f5); border: 1px solid #ccc; border-radius: 12px; height: 32px; position: relative; margin-top: 16px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
@@ -292,15 +197,15 @@ if menu == "경험치 및 낚시 계산기":
 
     #이미지 출력 위함
 
-    image_path = f"./level/{expectedLvl}.png"
-    img_base64 = get_image_base64(image_path)
+    image_path = f"./level/{expected_level}.png"
+    img_base64 = tr.get_image_base64(image_path)
     
     st.markdown(
         f"""
         <div style='font-size: 18px; font-weight: bold; margin-top: 12px; display: flex; align-items: center;'>
             예상 레벨 :
             <img src='data:image/png;base64,{img_base64}' style='height: 1.1em; margin: 0 5px;'/>
-            <span style='font-size: 14px; font-weight: bold;'>{levelName[expectedLvl]}</span>
+            <span style='font-size: 14px; font-weight: bold;'>{level_name[expected_level]}</span>
         </div>
         """, 
         unsafe_allow_html=True
@@ -331,92 +236,50 @@ if menu == "경험치 및 낚시 계산기":
     
     
     cols = st.columns(2)
-    minFTime = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
-    maxFTime = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
-    
+    min_fish_time = cols[0].number_input("낚시 최소시간", min_value=0, value=min_default, step=1)
+    max_fish_time = cols[1].number_input("낚시 최대시간", min_value=0, value=max_default, step=1)
+    fish_time = [min_fish_time, max_fish_time]
     if premium_storage: storage_default += 300
     else: storage_default += 150
     fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
     
-    f_average_sec = (minFTime+maxFTime)/2
+    f_average_sec = (min_fish_time+max_fish_time)/2
     if rod == '테런 낚싯대': f_average_sec /= 1.8
     
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {f_average_sec:.1f}초</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {formatTime(f_average_sec*fishStorage)}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {tr.format_time(f_average_sec*fishStorage)}</div>", unsafe_allow_html=True)
 
     if round((f_average_sec*fishStorage)) != 0 : st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>컴퓨터 예약 종료 명령어 : shutdown -s -t {round((f_average_sec)*fishStorage)}</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 취소 명령어 : shutdown -a</div>", unsafe_allow_html=True)
     
     st.write(" ")
     if st.button("[컴퓨터 예약 종료 설명 보기]"):
-        scheduleInfo()
+        tr.schedule_info()
     
     st.write(" ")
     st.write(" ")
     
-    def render_bait_cards(baits, expRequired, isCash=False):
-        cols = st.columns(2)  # 2열 생성
-    
-        for i, bait in enumerate(baits):
-            count = round(expRequired / bait["exp"])
-            total = count * (49 if isCash else bait["tr"])
-            totalSeconds = count * calcBait([minFTime, maxFTime])
-    
-            with cols[i % 2]:
-                st.markdown(f"""
-                <table style="width:100%; border-collapse: collapse; font-size:13px; line-height:1.6; margin-bottom:16px;">
-                    <thead>
-                        <tr>
-                            <th style="text-align:left; padding:8px; font-size:16px;" colspan="2">{bait['name']}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding:8px; width:50%;"><b>개수:</b></td>
-                            <td style="padding:8px;">{count:,}개</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:8px;"><b>{'총 캐시:' if isCash else '총 TR:'}</b></td>
-                            <td style="padding:8px;">{total:,} {'캐시' if isCash else 'TR'}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding:8px;"><b>예상 시간:</b></td>
-                            <td style="padding:8px;">{formatTime(totalSeconds)}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                """, unsafe_allow_html=True)
-
-
-    if useGoalLevel:
+    if use_goal_level:
         st.markdown("#### 목표 레벨에 필요한 지렁이 정보")
     
         st.markdown("##### 일반 지렁이")
-        render_bait_cards(Tbaits, expRequired, isCash=False)
+        tr.render_bait_cards(t_baits, exp_required, fish_time, isCash=False)
     
         st.markdown("##### 캐시 지렁이")
-        render_bait_cards(Cbaits, expRequired, isCash=True)
+        tr.render_bait_cards(c_baits, exp_required, fish_time, isCash=True)
         
 elif menu == "경험치 ↔ 지렁이":
 
-    def set_mode_xp_to_worms():
-        st.session_state.mode = "xp_to_worms"
-        st.session_state.selectCount = False
-
-    def set_mode_worms_to_xp():
-        st.session_state.mode = "worms_to_xp"
-        st.session_state.selectExp = False
-
     
-    all_baits = Tbaits + Cbaits
+    all_baits = t_baits + c_baits
     bait_names = [bait["name"] for bait in all_baits]
     selected_name2 = st.selectbox("지렁이를 선택하세요", bait_names)
     
     selected_bait = next(b for b in all_baits if b["name"] == selected_name2)
     selected_exp = selected_bait["exp"]
 
-    st.checkbox("얻고 싶은 경험치 → 필요한 지렁이 수 계산", key="selectExp", on_change=set_mode_xp_to_worms)
-    st.checkbox("지렁이 수 → 얻는 경험치 계산", key="selectCount", on_change=set_mode_worms_to_xp)
+    st.checkbox("얻고 싶은 경험치 → 필요한 지렁이 수 계산", key="selectExp", on_change=tr.set_mode_xp_to_worms)
+    st.checkbox("지렁이 수 → 얻는 경험치 계산", key="selectCount", on_change=tr.set_mode_worms_to_xp)
 
     if not st.session_state.selectExp and not st.session_state.selectCount:    st.session_state.mode = None
     mode = st.session_state.get("mode", None)
@@ -442,6 +305,3 @@ elif menu == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
-
-
-
