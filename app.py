@@ -12,7 +12,7 @@ st.set_page_config(
     page_icon="🎣"
 )
 
-t_baits = [
+T_BAITS = [
     {"name": "삼각 주먹떡밥", "exp": 153, "tr": 20},
     {"name": "크릴 새우 필라프", "exp": 703, "tr": 100},
     {"name": "갯지렁이 훈제 구이", "exp": 2363, "tr": 500},
@@ -20,7 +20,7 @@ t_baits = [
     {"name": "다이아 갯지렁이", "exp": 10701, "tr": 5000},
     ]
 
-c_baits = [
+C_BAITS = [
     {"name": "황제 지렁이", "exp": 19562},
     {"name": "장군 지렁이", "exp": 21658},
     {"name": "여왕 지렁이", "exp": 22056},
@@ -32,7 +32,7 @@ c_baits = [
 
 #### 낚싯대
 
-fishing_rods = {
+FISHING_RODS = {
     "낚싯대 선택": (0, 0, 0),
     "죽도 낚싯대": (40, 80, 0),
     "천사의 낚싯대": (30, 90, 100),
@@ -44,10 +44,10 @@ fishing_rods = {
     "대나무 낚싯대": (60, 120, 0),
 }
 
-sorted_rods_keys = sorted(k for k in fishing_rods if k != "낚싯대 선택")
-ordered_rods_keys = ["낚싯대 선택"] + sorted_rods_keys
+SORTED_RODS_KEYS = sorted(k for k in FISHING_RODS if k != "낚싯대 선택")
+ORDERED_ROD_KEYS = ["낚싯대 선택"] + SORTED_RODS_KEYS
 
-fishing_friends = {
+FISHING_FRIENDS = {
     "낚시 프렌즈" : (0, 0, 0),
     "화이트 똑똑 쥐돌이": (0, 8, 60),
     "토집사와 아기토끼": (10, 0, 100),
@@ -62,17 +62,17 @@ fishing_friends = {
     "화이트 헝그리베어": (3, 3, 20),
 }
 
-sorted_friends_keys = sorted(k for k in fishing_friends if k != "낚시 프렌즈")
-ordered_friends_keys = ["낚시 프렌즈"] + sorted_friends_keys
+SORTED_FRIENDS_KEYS = sorted(k for k in FISHING_FRIENDS if k != "낚시 프렌즈")
+ORDERED_FRIENDS_KEYS = ["낚시 프렌즈"] + SORTED_FRIENDS_KEYS
 
 
 st.sidebar.title("테일즈런너 유틸모음")
-menu = st.sidebar.radio(
+MENU = st.sidebar.radio(
     "메뉴 선택 (추후 추가 예정)",
     ["경험치 및 낚시 계산기", "경험치 ↔ 지렁이"],
     index = 0 # 기본값
 )
-if menu == "경험치 및 낚시 계산기":
+if MENU == "경험치 및 낚시 계산기":
     col1, col2 = st.columns([3,1])
     with col1:
         st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>레벨 경험치 계산", unsafe_allow_html=True)
@@ -222,13 +222,13 @@ if menu == "경험치 및 낚시 계산기":
     st.write(" ")
     premium_storage = st.checkbox("프리미엄 티켓", value=False)
     cols = st.columns(2)
-    rod = cols[0].selectbox("낚싯대 종류 (가나다순)", ordered_rods_keys, index=0)
+    rod = cols[0].selectbox("낚싯대 종류 (가나다순)", ORDERED_ROD_KEYS, index=0)
     if rod == "테런 낚싯대": 
         st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>테런 낚싯대 계산은 편차가 심합니다.</div>", unsafe_allow_html=True)
         st.write(" ")
-    friend = cols[1].selectbox("낚시 프렌즈 (가나다순)", ordered_friends_keys, index=0)
-    min_default, max_default, storage_default = fishing_rods[rod]
-    f_min, f_max, f_storage = fishing_friends[friend]
+    friend = cols[1].selectbox("낚시 프렌즈 (가나다순)", ORDERED_FRIENDS_KEYS, index=0)
+    min_default, max_default, storage_default = FISHING_RODS[rod]
+    f_min, f_max, f_storage = FISHING_FRIENDS[friend]
     
     min_default = max(0, min_default - f_min) 
     max_default = max(0, max_default - f_max) 
@@ -263,15 +263,15 @@ if menu == "경험치 및 낚시 계산기":
         st.markdown("#### 목표 레벨에 필요한 지렁이 정보")
     
         st.markdown("##### 일반 지렁이")
-        tr.render_bait_cards(t_baits, exp_required, fish_time, isCash=False)
+        tr.render_bait_cards(T_BAITS, exp_required, fish_time, isCash=False)
     
         st.markdown("##### 캐시 지렁이")
-        tr.render_bait_cards(c_baits, exp_required, fish_time, isCash=True)
+        tr.render_bait_cards(C_BAITS, exp_required, fish_time, isCash=True)
         
-elif menu == "경험치 ↔ 지렁이":
+elif MENU == "경험치 ↔ 지렁이":
 
     
-    all_baits = t_baits + c_baits
+    all_baits = T_BAITS + C_BAITS
     bait_names = [bait["name"] for bait in all_baits]
     selected_name2 = st.selectbox("지렁이를 선택하세요", bait_names)
     
@@ -305,4 +305,3 @@ elif menu == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
-
