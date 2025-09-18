@@ -167,10 +167,7 @@ if MENU == "경험치 및 낚시 계산기":
     st.markdown(bar_html, unsafe_allow_html=True)
     st.markdown("---")
     ###### 지렁이 계산은 코인, 쓰레기 제외
-    st.write(" ")
-    
-    
-    st.write(" ")
+
     st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 지렁이 계산", unsafe_allow_html=True)
     
     st.write(" ")
@@ -210,8 +207,7 @@ if MENU == "경험치 및 낚시 계산기":
     if st.button("[컴퓨터 예약 종료 설명 보기]"):
         tr.schedule_info()
     
-    st.write(" ")
-    st.write(" ")
+    st.markdown("---")
     
     if use_goal_level:
         st.markdown("#### 목표 레벨에 필요한 지렁이 정보")
