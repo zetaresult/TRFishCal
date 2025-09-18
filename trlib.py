@@ -1,3 +1,4 @@
+# %%writefile trlib.py
 
 import streamlit as st
 import numpy as np
@@ -142,3 +143,4 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
