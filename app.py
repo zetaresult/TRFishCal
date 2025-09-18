@@ -203,8 +203,9 @@ if MENU == "경험치 및 낚시 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {f_average_sec:.1f}초</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {tr.format_time(f_average_sec*fishStorage)}</div>", unsafe_allow_html=True)
 
-    if round((f_average_sec*fishStorage)) != 0 : st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>컴퓨터 예약 종료 명령어 : shutdown -s -t {round((f_average_sec)*fishStorage)}</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 취소 명령어 : shutdown -a</div>", unsafe_allow_html=True)
+    if round((f_average_sec*fishStorage)) != 0 : 
+        st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>컴퓨터 예약 종료 명령어 : shutdown -s -t {round((f_average_sec)*fishStorage)}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 취소 명령어 : shutdown -a</div>", unsafe_allow_html=True)
     
     st.write(" ")
     if st.button("[컴퓨터 예약 종료 설명 보기]"):
@@ -259,3 +260,4 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
