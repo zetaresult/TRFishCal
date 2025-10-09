@@ -166,7 +166,6 @@ if MENU == "경험치 및 낚시 계산기":
     )
     st.markdown(bar_html, unsafe_allow_html=True)
     st.markdown("---")
-    ###### 지렁이 계산은 코인, 쓰레기 제외
 
     st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 지렁이 계산", unsafe_allow_html=True)
     
@@ -190,12 +189,12 @@ if MENU == "경험치 및 낚시 계산기":
     fish_time = [min_fish_time, max_fish_time]
     if premium_storage: storage_default += 300
     else: storage_default += 150
-    fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
+    fish_storage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
     
     f_average_sec = (min_fish_time+max_fish_time)/2
 
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {f_average_sec:.1f}초</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {tr.format_time(f_average_sec*fishStorage)}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {tr.format_time(f_average_sec*fish_storage)}</div>", unsafe_allow_html=True)
 
 
     if rod == '테런 낚싯대':
@@ -224,8 +223,9 @@ if MENU == "경험치 및 낚시 계산기":
         """, unsafe_allow_html=True)
         
     
-    if round((f_average_sec*fishStorage)) != 0 : st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>컴퓨터 예약 종료 명령어 : shutdown -s -t {round((f_average_sec)*fishStorage)}</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 취소 명령어 : shutdown -a</div>", unsafe_allow_html=True)
+    if round((f_average_sec*fish_storage)) != 0 : 
+        st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>컴퓨터 예약 종료 명령어 : shutdown -s -t {round((f_average_sec)*fish_storage)}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>예약 취소 명령어 : shutdown -a</div>", unsafe_allow_html=True)
     
     st.write(" ")
     if st.button("[컴퓨터 예약 종료 설명 보기]"):
@@ -279,6 +279,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
