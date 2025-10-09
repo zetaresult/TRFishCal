@@ -199,9 +199,29 @@ if MENU == "경험치 및 낚시 계산기":
 
 
     if rod == '테런 낚싯대':
-        st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>테런 낚싯대 시간별 획득량", unsafe_allow_html=True)
-        st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>30분 : 약 {(30*60)//f_average_sec}마리</div>", unsafe_allow_html=True)
-        st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>1 시간 : 약 {(60*60)//f_average_sec}마리</div>", unsafe_allow_html=True) 
+        st.markdown(f"""
+            <div style="font-size: 20px; font-weight: bold; margin-top: 12px; margin-bottom: 8px;">
+                🎣 테런 낚싯대 시간별 예상 획득량
+            </div>
+            <table style="width:100%; border-collapse: collapse; font-size:13px; line-height:1.6; margin-bottom:16px; border: 1px solid #ccc;">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th style="text-align:left; padding:8px;">시간</th>
+                        <th style="text-align:left; padding:8px;">예상 획득량</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:8px;">30분</td>
+                        <td style="padding:8px;">약 {(30*60)//f_average_sec} 마리</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px;">1시간</td>
+                        <td style="padding:8px;">약 {(60*60)//f_average_sec} 마리</td>
+                    </tr>
+                </tbody>
+            </table>
+        """, unsafe_allow_html=True)
         
     
     if round((f_average_sec*fishStorage)) != 0 : st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>컴퓨터 예약 종료 명령어 : shutdown -s -t {round((f_average_sec)*fishStorage)}</div>", unsafe_allow_html=True)
@@ -259,6 +279,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
