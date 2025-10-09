@@ -205,7 +205,6 @@ if MENU == "경험치 및 낚시 계산기":
             </div>
             <table style="width:100%; border-collapse: collapse; font-size:13px; line-height:1.6; margin-bottom:16px; border: 1px solid #ccc;">
                 <thead>
-                    <tr style="background-color: #f2f2f2;">
                         <th style="text-align:left; padding:8px;">시간</th>
                         <th style="text-align:left; padding:8px;">예상 획득량</th>
                     </tr>
@@ -279,6 +278,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
