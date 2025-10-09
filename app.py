@@ -68,18 +68,20 @@ if MENU == "경험치 및 낚시 계산기":
     
     cur_level_index = (np.where(level_name == select_cur_level)[0][0]) 
 
-
-    try:
-        current_per = float(cur_per_str)
-        if current_per >= 100:
-                st.error("100 미만의 숫자를 입력해주세요.")
-                current_per = 0.0
-        elif current_per < 0:
-                st.error("0 이상의 숫자를 입력해주세요.")
-                current_per = 0.0
-    except ValueError:
-        st.error("숫자를 입력해주세요.")
-        current_per = 0.0
+    if cur_per_str.strip() == "":
+    current_per = 0.0
+    else:
+        try:
+            current_per = float(cur_per_str)
+            if current_per >= 100:
+                    st.error("100 미만의 숫자를 입력해주세요.")
+                    current_per = 0.0
+            elif current_per < 0:
+                    st.error("0 이상의 숫자를 입력해주세요.")
+                    current_per = 0.0
+        except ValueError:
+            st.error("숫자를 입력해주세요.")
+            current_per = 0.0
     
     st.markdown("""
     <style>
@@ -277,6 +279,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
