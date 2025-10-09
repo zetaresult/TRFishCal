@@ -107,8 +107,22 @@ def render_bait_cards(baits, exp_required, fish_time, isCash=False):
 
     for i, bait in enumerate(baits):
         count = round(exp_required / bait["exp"])
-        total = count * (49 if isCash else bait["tr"])
+
+        price = bait["cash"] if isCash else bait["tr"]
+
+        if price == -1: 
+            event_print = "[추석 이벤트] 구매 불가" #달나라 지렁이
+            event_bait = True
+        else:
+            total = count * (bait["cash"] if isCash else bait["tr"])
+            event_bait = False
+        
         total_seconds = count * calc_bait(fish_time)
+        
+        if event_print == False:
+            total_print = f"{total:,} " + f"{'캐시' if isCash else 'TR'}"
+        else:
+            total_print = event_print
 
         with cols[i % 2]:
             st.markdown(f"""
@@ -125,7 +139,7 @@ def render_bait_cards(baits, exp_required, fish_time, isCash=False):
                     </tr>
                     <tr>
                         <td style="padding:8px;"><b>{'총 캐시:' if isCash else '총 TR:'}</b></td>
-                        <td style="padding:8px;">{total:,} {'캐시' if isCash else 'TR'}</td>
+                        <td style="padding:8px;">{total_print}</td>
                     </tr>
                     <tr>
                         <td style="padding:8px;"><b>예상 시간:</b></td>
@@ -143,4 +157,5 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
