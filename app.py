@@ -1,6 +1,7 @@
 # %%writefile app.py
 
 import trlib as tr
+import trupdate as trU
 from trdata import (
     T_BAITS, 
     C_BAITS, 
@@ -28,7 +29,7 @@ MENU = st.sidebar.radio(
 )
 if MENU == "경험치 및 낚시 계산기":
     if st.button("[업데이트 내역]"):
-        tr.update_info()
+        trU.update_info()
         
     col1, col2 = st.columns([3,1])
     with col1:
@@ -281,6 +282,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
