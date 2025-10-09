@@ -100,18 +100,13 @@ if MENU == "경험치 및 낚시 계산기":
     </style>
     """, unsafe_allow_html=True)
     
-    use_goal_level = True
     cols = st.columns([1,1.5,1])
-    if use_goal_level:
-        
-        goal_color = cols[0].selectbox("목표 레벨", level_color, key="goal_color", accept_new_options=False)
-        goal_shoe = cols[1].selectbox("", level_shoe, key="goal_shoes", accept_new_options=False)
-        select_goal_level = goal_color+goal_shoe
-        cols[2].markdown("")
-        goal_level_index = (np.where(level_name == select_goal_level)[0][0])
-    else:
-        st.write("목표 레벨을 통해 계산하려면 위 체크박스를 체크해주세요.")
-        select_goal_level, goal_level_index = -1, -1
+    
+    goal_color = cols[0].selectbox("목표 레벨", level_color, key="goal_color", accept_new_options=False)
+    goal_shoe = cols[1].selectbox("", level_shoe, key="goal_shoes", accept_new_options=False)
+    select_goal_level = goal_color+goal_shoe
+    cols[2].markdown("")
+    goal_level_index = (np.where(level_name == select_goal_level)[0][0])
     
     
     use_fish_page = st.checkbox("낚시 페이지 계산", value=False)
@@ -131,7 +126,7 @@ if MENU == "경험치 및 낚시 계산기":
     else:
         total_page = 0
         
-    expected_level ,exp_required, now_per = tr.level_expected(cur_level_index, goal_level_index, current_per, total_page)
+    expected_level ,exp_required, now_per, use_goal_level = tr.level_expected(cur_level_index, goal_level_index, current_per, total_page)
     
     per = now_per / 100 * 100  # 0~100%
     
@@ -236,7 +231,7 @@ if MENU == "경험치 및 낚시 계산기":
     
     st.markdown("---")
     
-    if exp_required != -1:
+    if use_goal_level:
         st.markdown("#### 목표 레벨에 필요한 지렁이 정보")
     
         st.markdown("##### 일반 지렁이")
@@ -282,6 +277,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
