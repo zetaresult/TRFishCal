@@ -7,7 +7,7 @@ T_BAITS = [
     {"name": "다이아 갯지렁이", "exp": 10701, "tr": 5000},
     ]
 
-# 이벤트성 : -1, 획득처 없음 : -2
+# 추석 : -1
 C_BAITS = [
     {"name": "황제 지렁이", "exp": 19562, "cash" : 49},
     {"name": "장군 지렁이", "exp": 21658, "cash" : 49},
@@ -29,9 +29,10 @@ FISHING_RODS = {
     "악마의 낚싯대": (50, 70, 100),
     "매직 스타 낚싯대": (40, 70, 50),
     "푸른 장미검 낚싯대": (30, 80, 50),
-    "테런 낚싯대(달토끼 낚싯대)": (15, 20, 150), #추석 이벤트
+    "테런 낚싯대": (15, 20, 150),
     "강태공의 낚싯대": (60, 100, 0),
     "대나무 낚싯대": (60, 120, 0),
+    "달토끼 낚싯대" : (15, 20, 300), # 추석 이벤트
 }
 
 SORTED_RODS_KEYS = sorted(k for k in FISHING_RODS if k != "낚싯대 선택")
@@ -56,6 +57,7 @@ FISHING_FRIENDS = {
 
 SORTED_FRIENDS_KEYS = sorted(k for k in FISHING_FRIENDS if k != "낚시 프렌즈")
 ORDERED_FRIENDS_KEYS = ["낚시 프렌즈"] + SORTED_FRIENDS_KEYS
+
 
 
 
