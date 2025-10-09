@@ -30,12 +30,12 @@ def level_expected(current_level, goal_level, current_per, page_total):
     level_data = np.load('lvlExp.npy', allow_pickle=True)
     current_exp = level_data[current_level][2] + (level_data[current_level][1] * (current_per/100)) + page_total
     indices = np.where(level_data[:,2] <= current_exp)[0]
-    if len(indices) == 0: expected_level = 0
-    else: expected_level = indices[-1]
+    expected_level = indices[-1] if len(indices) > 0 else 0
 
-    if goal_level != -1: 
-        exp_required = int(level_data[goal_level][2] - current_exp)
-        if expected_level >= goal_level: exp_required = max(0, exp_required)
+    use_goal_level = (goal_level != -1) and (goal_level > current_level)
+
+    if use_goal_level: 
+        exp_required = max(0, int(level_data[goal_level][2] - current_exp))
     else: #목표레벨 안쓸경우
         exp_required = -1 
 
@@ -43,7 +43,7 @@ def level_expected(current_level, goal_level, current_per, page_total):
         now_per = 100.0
     else:
         now_per = (level_data[expected_level][1] - (level_data[expected_level+1][2] - current_exp)) * (100 / level_data[expected_level][1])
-    return expected_level ,exp_required, now_per
+    return expected_level ,exp_required, now_per, use_goal_level
 
 def calc_bait(fish_time): return sum(fish_time) / 2
 
@@ -158,6 +158,7 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
 
 
