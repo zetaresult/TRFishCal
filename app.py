@@ -170,7 +170,7 @@ if MENU == "경험치 및 낚시 계산기":
     st.markdown(bar_html, unsafe_allow_html=True)
     st.markdown("---")
 
-    st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 및 지렁이 계산", unsafe_allow_html=True)
+    st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>낚시 시간 계산", unsafe_allow_html=True)
     
     st.write(" ")
     premium_storage = st.checkbox("프리미엄 티켓", value=False)
@@ -236,7 +236,7 @@ if MENU == "경험치 및 낚시 계산기":
     
     st.markdown("---")
     
-    if use_goal_level:
+    if exp_required != 1:
         st.markdown("#### 목표 레벨에 필요한 지렁이 정보")
     
         st.markdown("##### 일반 지렁이")
@@ -282,6 +282,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
