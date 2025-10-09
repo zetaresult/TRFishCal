@@ -174,9 +174,7 @@ if MENU == "경험치 및 낚시 계산기":
     premium_storage = st.checkbox("프리미엄 티켓", value=False)
     cols = st.columns(2)
     rod = cols[0].selectbox("낚싯대 종류 (가나다순)", ORDERED_ROD_KEYS, index=0)
-    # if rod == "테런 낚싯대":  #### 프렌즈 개편으로 보정계수 한 것과 비슷.. 주석처리.. 문제 없으면 지울 예정
-    #     st.markdown(f"<div style='font-size: 15px; font-weight: bold; margin-top: 12px;'>테런 낚싯대 계산은 편차가 심합니다.</div>", unsafe_allow_html=True)
-    #     st.write(" ")
+
     friend = cols[1].selectbox("낚시 프렌즈 (가나다순)", ORDERED_FRIENDS_KEYS, index=0)
     min_default, max_default, storage_default = FISHING_RODS[rod]
     f_min, f_max, f_storage = FISHING_FRIENDS[friend]
@@ -195,8 +193,7 @@ if MENU == "경험치 및 낚시 계산기":
     fishStorage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
     
     f_average_sec = (min_fish_time+max_fish_time)/2
-    # if rod == '테런 낚싯대': f_average_sec /= 1.8  #### 프렌즈 개편으로 보정계수 한 것과 비슷.. 주석처리.. 문제 없으면 지울 예정
-    
+
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>한 마리 당 약 {f_average_sec:.1f}초</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {tr.format_time(f_average_sec*fishStorage)}</div>", unsafe_allow_html=True)
 
@@ -262,5 +259,6 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
