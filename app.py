@@ -27,6 +27,9 @@ MENU = st.sidebar.radio(
     index = 0 # 기본값
 )
 if MENU == "경험치 및 낚시 계산기":
+    if st.button("[업데이트 내역]"):
+        # tr.update_info()
+        
     col1, col2 = st.columns([3,1])
     with col1:
         st.markdown(f"<div style='font-size: 25px; font-weight: bold; margin-top: 12px;'>레벨 경험치 계산", unsafe_allow_html=True)
@@ -34,7 +37,6 @@ if MENU == "경험치 및 낚시 계산기":
         if st.button("피드백"):
             tr.feedback_dialog()
     if st.session_state.get("feedback_submitted", False):
-            # st.success("피드백 감사합니다! 🎉")
             st.session_state.feedback_submitted = False
     
     st.write(" ")
@@ -279,6 +281,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
