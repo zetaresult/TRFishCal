@@ -197,7 +197,7 @@ if MENU == "경험치 및 낚시 계산기":
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>최대 살림망 까지 약 {tr.format_time(f_average_sec*fish_storage)}</div>", unsafe_allow_html=True)
 
 
-    if rod == '테런 낚싯대':
+    if rod == '테런 낚싯대(달토끼 낚싯대)':
         st.markdown(f"""
             <div style="font-size: 15px; font-weight: bold; margin-top: 12px; margin-bottom: 8px;">
                 테런 낚싯대 시간별 정보
@@ -279,6 +279,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
