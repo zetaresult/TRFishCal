@@ -8,7 +8,7 @@ from google.oauth2.service_account import Credentials
 import datetime
 
 import base64 
-
+import math
 
 def connect_to_gsheet():
 
@@ -117,7 +117,7 @@ def render_bait_cards(baits, exp_required, fish_time, isCash=False):
     cols = st.columns(2)  # 2열 생성
 
     for i, bait in enumerate(baits):
-        count = round(exp_required / bait["exp"])
+        count = math.ceil(exp_required / bait["exp"])
 
         price = get_price(bait, isCash)
 
@@ -158,6 +158,7 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
 
 
