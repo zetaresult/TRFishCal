@@ -102,28 +102,31 @@ def get_image_base64(file_path):
         data = f.read()
     return base64.b64encode(data).decode()
 
+def get_price(bait, isCash):
+    return bait["cash"] if isCash else bait["tr"]
+    
+def get_total_text(count, price, isCash):
+    if price == -1:
+        return "[추석 이벤트] 구매 불가"
+    elif price == -2:
+        return "[획득 불가]"
+    else:
+        total = count * price
+        currency = "캐시" if isCash else "TR"
+        return f"{total:,} {currency}"
+
 def render_bait_cards(baits, exp_required, fish_time, isCash=False):
     cols = st.columns(2)  # 2열 생성
 
     for i, bait in enumerate(baits):
         count = round(exp_required / bait["exp"])
 
-        price = bait["cash"] if isCash else bait["tr"]
+        price = get_price(bait, isCash)
 
-        if price == -1: 
-            event_print = "[추석 이벤트] 구매 불가" #달나라 지렁이
-            event_bait = True
-        else:
-            total = count * (bait["cash"] if isCash else bait["tr"])
-            event_bait = False
-        
+        total_print = get_total_text(count, price, isCash)
         total_seconds = count * calc_bait(fish_time)
         
-        if event_bait == False:
-            total_print = f"{total:,} " + f"{'캐시' if isCash else 'TR'}"
-        else:
-            total_print = event_print
-
+        
         with cols[i % 2]:
             st.markdown(f"""
             <table style="width:100%; border-collapse: collapse; font-size:13px; line-height:1.6; margin-bottom:16px;">
@@ -157,6 +160,7 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
 
 
