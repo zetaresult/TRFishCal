@@ -23,6 +23,6 @@ def update_info():
                 st.markdown(f"{idx}. {item}  ")
 
             st.markdown(f"""
-참고 : [{update['title']} 바로가기]({update['link']})  
+참고 : [{update['title']}]({update['link']})  
 > {update['note']}  
 """)
