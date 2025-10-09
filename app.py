@@ -236,7 +236,7 @@ if MENU == "경험치 및 낚시 계산기":
     
     st.markdown("---")
     
-    if not (use_goal_level) and not (exp_required == 0):
+    if exp_required != -1:
         st.markdown("#### 목표 레벨에 필요한 지렁이 정보")
     
         st.markdown("##### 일반 지렁이")
@@ -282,6 +282,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
