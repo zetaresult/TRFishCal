@@ -273,12 +273,13 @@ elif MENU == "경험치 ↔ 지렁이":
         target_count = st.number_input("지렁이 개수 입력", min_value=0, value=0, step=1)
         
         if target_count > 0:
-            st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name2}의 개수는 약 {round(selected_exp * target_count):,}EXP 입니다.</div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-top: 12px;'>{selected_name2} {target_count}개는 약 {round(selected_exp * target_count):,}EXP 입니다.</div>", unsafe_allow_html=True)
 
     
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
