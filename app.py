@@ -201,7 +201,7 @@ if MENU == "경험치 및 낚시 계산기":
     if rod == '테런 낚싯대':
         st.markdown(f"""
             <div style="font-size: 20px; font-weight: bold; margin-top: 12px; margin-bottom: 8px;">
-                🎣 테런 낚싯대 시간별 예상 획득량
+                테런 낚싯대 시간별 예상 획득량
             </div>
             <table style="width:100%; border-collapse: collapse; font-size:13px; line-height:1.6; margin-bottom:16px; border: 1px solid #ccc;">
                 <thead>
@@ -279,6 +279,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
