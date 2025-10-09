@@ -200,8 +200,8 @@ if MENU == "경험치 및 낚시 계산기":
 
     if rod == '테런 낚싯대':
         st.markdown(f"""
-            <div style="font-size: 20px; font-weight: bold; margin-top: 12px; margin-bottom: 8px;">
-                테런 낚싯대 시간별 예상 획득량
+            <div style="font-size: 15px; font-weight: bold; margin-top: 12px; margin-bottom: 8px;">
+                테런 낚싯대 시간별 정보
             </div>
             <table style="width:100%; border-collapse: collapse; font-size:13px; line-height:1.6; margin-bottom:16px; border: 1px solid #ccc;">
                 <thead>
@@ -213,11 +213,11 @@ if MENU == "경험치 및 낚시 계산기":
                 <tbody>
                     <tr>
                         <td style="padding:8px;">30분</td>
-                        <td style="padding:8px;">약 {(30*60)//f_average_sec} 마리</td>
+                        <td style="padding:8px;">약 {int((30*60)//f_average_sec)}마리</td>
                     </tr>
                     <tr>
                         <td style="padding:8px;">1시간</td>
-                        <td style="padding:8px;">약 {(60*60)//f_average_sec} 마리</td>
+                        <td style="padding:8px;">약 {int((60*60)//f_average_sec)}마리</td>
                     </tr>
                 </tbody>
             </table>
@@ -279,6 +279,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
