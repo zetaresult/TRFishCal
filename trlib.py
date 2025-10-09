@@ -74,7 +74,7 @@ def update_info():
 
 참고 : [테일즈런너 10월 1차 업데이트](https://tr.rhaon.co.kr/news/updates/76?page=1)
 
-> 그 외 개선 사항은 피드백이용 바랍니다.  
+> 그 외 개선 사항은 피드백 버튼 이용 바랍니다!  
 """)
 
 
@@ -172,6 +172,7 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
 
 
