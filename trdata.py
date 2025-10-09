@@ -7,16 +7,18 @@ T_BAITS = [
     {"name": "다이아 갯지렁이", "exp": 10701, "tr": 5000},
     ]
 
+# 이벤트성 : -1, 획득처 없음 : -2
 C_BAITS = [
-    {"name": "황제 지렁이", "exp": 19562},
-    {"name": "장군 지렁이", "exp": 21658},
-    {"name": "여왕 지렁이", "exp": 22056},
-    {"name": "승리의 지렁이", "exp": 21972},
-    {"name": "선샤인 지렁이", "exp": 22124},
-    {"name": "별빛 지렁이", "exp": 22223},
-    {"name": "해왕강림 지렁이", "exp": 22189},
-    {"name": "달나라 지렁이", "exp" :30160}, # 추석 이벤트
+    {"name": "황제 지렁이", "exp": 19562, "cash" : 49},
+    {"name": "장군 지렁이", "exp": 21658, "cash" : 49},
+    {"name": "여왕 지렁이", "exp": 22056, "cash" : 49},
+    {"name": "승리의 지렁이", "exp": 21972, "cash" : 49},
+    {"name": "선샤인 지렁이", "exp": 22124, "cash" : 49},
+    {"name": "별빛 지렁이", "exp": 22223, "cash" : 49},
+    {"name": "해왕강림 지렁이", "exp": 22189, "cash" : 49},
+    {"name": "달나라 지렁이", "exp" :30160, "cash" : -1}, # 추석 이벤트
     ]
+
 
 #### 낚싯대
 
@@ -54,5 +56,6 @@ FISHING_FRIENDS = {
 
 SORTED_FRIENDS_KEYS = sorted(k for k in FISHING_FRIENDS if k != "낚시 프렌즈")
 ORDERED_FRIENDS_KEYS = ["낚시 프렌즈"] + SORTED_FRIENDS_KEYS
+
 
 
