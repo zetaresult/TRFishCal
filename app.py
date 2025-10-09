@@ -69,7 +69,7 @@ if MENU == "경험치 및 낚시 계산기":
     cur_level_index = (np.where(level_name == select_cur_level)[0][0]) 
 
     if cur_per_str.strip() == "":
-    current_per = 0.0
+        current_per = 0.0
     else:
         try:
             current_per = float(cur_per_str)
@@ -279,6 +279,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
