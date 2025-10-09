@@ -63,6 +63,19 @@ def format_time(total_seconds):
     if not parts:  # 전부 0인 경우
         return "0분"
     return " ".join(parts)
+    
+@st.dialog("업데이트 내역")
+def update_info():
+    st.markdown("""
+### 테일즈런너 10월 1차 업데이트
+1. 추석 이벤트에 추가된 **달토끼 낚싯대**, **달나라 지렁이** 추가.  
+2. 낚시 프렌즈 시간 개선에 따라 수정완료.  
+3. **테런 낚싯대** 및 **달토끼 낚싯대** **30분, 1시간** 획득량 추가.  
+
+참고 : [테일즈런너 10월 1차 업데이트](https://tr.rhaon.co.kr/news/updates/76?page=1)
+
+> 그 외 개선 사항은 피드백이용 바랍니다.  
+""")
 
 
 @st.dialog("예약종료 사용법")
@@ -73,7 +86,6 @@ def schedule_info():
 
 > ℹ️ 평균적인 시간이므로 실제 어획물과 차이가 있을 수 있습니다.  
 > 반드시 낚싯대와 낚시 프렌즈를 선택 후 예약 종료 명령어를 입력 바랍니다.  
-> (명령어 끝이 0일 경우, 컴퓨터가 강제 종료됩니다.)
 """)
 
 
@@ -160,6 +172,7 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
 
 
