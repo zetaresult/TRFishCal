@@ -119,7 +119,7 @@ def render_bait_cards(baits, exp_required, fish_time, isCash=False):
         
         total_seconds = count * calc_bait(fish_time)
         
-        if event_print == False:
+        if event_bait == False:
             total_print = f"{total:,} " + f"{'캐시' if isCash else 'TR'}"
         else:
             total_print = event_print
@@ -157,5 +157,6 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
 
