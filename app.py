@@ -28,7 +28,7 @@ MENU = st.sidebar.radio(
     index = 0 # 기본값
 )
 if MENU == "경험치 및 낚시 계산기":
-    if st.button("[업데이트 내역]"):
+    if st.button("[업데이트 내역 25-10-21]"):
         trU.update_info()
         
     col1, col2 = st.columns([3,1])
@@ -273,6 +273,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
