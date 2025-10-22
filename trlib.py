@@ -108,6 +108,8 @@ def get_total_text(count, price, isCash):
         return "[추석 이벤트] 구매 불가"
     elif price == -2:
         return "[획득 불가]"
+    elif price == -3:
+        return "[한정 이벤트]"
     else:
         total = count * price
         currency = "캐시" if isCash else "TR"
@@ -158,6 +160,7 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
 
 
