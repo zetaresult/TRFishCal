@@ -160,6 +160,7 @@ if MENU == "경험치 및 낚시 계산기":
     
     st.write(" ")
     premium_storage = st.checkbox("프리미엄 티켓", value=False)
+    ability_storage = st.checkbox("[어빌리티] 휴대용 살림망", value=False)
     cols = st.columns(2)
     rod = cols[0].selectbox("낚싯대 종류 (가나다순)", ORDERED_ROD_KEYS, index=0)
 
@@ -178,6 +179,10 @@ if MENU == "경험치 및 낚시 계산기":
     fish_time = [min_fish_time, max_fish_time]
     if premium_storage: storage_default += 300
     else: storage_default += 150
+
+    if ability_storage: storage_default += 5
+
+
     fish_storage = st.number_input("최대 살림망", min_value=0, value=storage_default, step=1)
     
     f_average_sec = (min_fish_time+max_fish_time)/2
@@ -268,6 +273,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
