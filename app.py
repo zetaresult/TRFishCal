@@ -15,12 +15,6 @@ import streamlit as st
 import numpy as np
 import math
 
-hide_streamlit_style = """
-    <style>
-    .css-1avcm0n {visibility: hidden;}
-    </style>
-"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 
 st.set_page_config(
@@ -280,6 +274,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
