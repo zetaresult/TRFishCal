@@ -16,9 +16,11 @@ C_BAITS = [
     {"name": "선샤인 지렁이", "exp": 22124, "cash" : 49},
     {"name": "별빛 지렁이", "exp": 22223, "cash" : 49},
     {"name": "해왕강림 지렁이", "exp": 22189, "cash" : 49},
+    {"name": "무지개 왕관 지렁이", "exp": 22172, "cash" : 49},
     {"name": "달나라 지렁이", "exp" :30160, "cash" : -1}, # 추석 이벤트
     {"name": "황금 갯갯갯지렁이", "exp" :16932, "cash" : -2}, # 한정 이벤트
     {"name": "다이아 갯갯갯지렁이", "exp" :32103, "cash" : -2}, # 한정 이벤트
+    
     ]
 
 
@@ -61,6 +63,7 @@ FISHING_FRIENDS = {
 
 SORTED_FRIENDS_KEYS = sorted(k for k in FISHING_FRIENDS if k != "낚시 프렌즈")
 ORDERED_FRIENDS_KEYS = ["낚시 프렌즈"] + SORTED_FRIENDS_KEYS
+
 
 
 
