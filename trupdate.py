@@ -39,8 +39,10 @@ def update_info():
         with st.expander(update['title'], expanded=(i == 0)):
             for idx, item in enumerate(update["items"], start=1):
                 st.markdown(f"{idx}. {item}  ")
-
-            st.markdown(f"""
+            check_link = f"""
 참고 : [{update['title']}]({update['link']})  
 > {update['note']}  
-""")
+""" if update['link'] != '' else f"""
+> {update['note']}  
+"""
+            st.markdown(check_link)
