@@ -43,7 +43,13 @@ def level_expected(current_level, goal_level, current_per, page_total):
         now_per = 100.0
     else:
         now_per = (level_data[expected_level][1] - (level_data[expected_level+1][2] - current_exp)) * (100 / level_data[expected_level][1])
-    return expected_level ,exp_required, now_per, use_goal_level
+
+    if expected_level >= len(level_data) - 1:
+        extra_exp = int(current_exp)
+    else: 
+        extra_exp = -1
+    
+    return expected_level ,exp_required, now_per, use_goal_level, extra_exp
 
 def calc_bait(fish_time): return sum(fish_time) / 2
 
@@ -160,6 +166,7 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
 
 
