@@ -118,11 +118,13 @@ if MENU == "경험치 및 낚시 계산기":
     else:
         total_page = 0
         
-    expected_level ,exp_required, now_per, use_goal_level = tr.level_expected(cur_level_index, goal_level_index, current_per, total_page)
+    expected_level ,exp_required, now_per, use_goal_level, extra_exp = tr.level_expected(cur_level_index, goal_level_index, current_per, total_page)
     
     per = now_per / 100 * 100  # 0~100%
-    
-    if exp_required != -1: 
+
+    if extra_exp != -1:
+        barText = f"({extra_exp:,} EXP)"
+    elif exp_required != -1: 
         barText = f"{now_per:.2f}% ({exp_required:,} EXP 남음)"
         if (use_goal_level) and (exp_required == 0): barText = f"{now_per:.2f}%"
     else: barText = f"{now_per:.2f}%"
@@ -274,6 +276,7 @@ elif MENU == "경험치 ↔ 지렁이":
     else:
         st.info("계산 방식을 하나 선택해주세요.")
     
+
 
 
 
