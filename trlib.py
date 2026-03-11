@@ -6,6 +6,7 @@ import numpy as np
 import gspread
 from google.oauth2.service_account import Credentials
 import datetime
+from zoneinfo import ZoneInfo
 
 import base64 
 import math
@@ -23,7 +24,7 @@ def connect_to_gsheet():
 
 def save_feedback(name, feedback):
     sheet = connect_to_gsheet()
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now = datetime.datetime.now(ZoneInfo("Asia/Seoul")).strftime("%Y-%m-%d %H:%M:%S")
     sheet.append_row([name, feedback, now])
 
 def level_expected(current_level, goal_level, current_per, page_total):
@@ -166,6 +167,7 @@ def set_mode_xp_to_worms():
 def set_mode_worms_to_xp():
     st.session_state.mode = "worms_to_xp"
     st.session_state.selectExp = False
+
 
 
 
