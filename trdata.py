@@ -38,6 +38,10 @@ FISHING_RODS = {
     "대나무 낚싯대": (60, 120, 0),
     "달토끼 낚싯대" : (15, 20, 300), # 추석 이벤트
     "영혼 낚싯대": (50, 90, 150),
+    "그린우드 빗자루 낚싯대" : (50, 110, 50),
+    "핑크우드 빗자루 낚싯대" : (60, 100, 50),
+    "야옹이 낚싯대" : (60, 110, 25),
+    "멍멍이 낚싯대" : (50, 120, 25),
 }
 
 SORTED_RODS_KEYS = sorted(k for k in FISHING_RODS if k != "낚싯대 선택")
@@ -82,6 +86,7 @@ FISHING_FRIENDS = {
 
 SORTED_FRIENDS_KEYS = sorted(k for k in FISHING_FRIENDS if k != "낚시 프렌즈")
 ORDERED_FRIENDS_KEYS = ["낚시 프렌즈"] + SORTED_FRIENDS_KEYS
+
 
 
 
