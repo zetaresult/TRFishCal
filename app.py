@@ -29,7 +29,7 @@ MENU = st.sidebar.radio(
     index = 0 # 기본값
 )
 if MENU == "경험치 및 낚시 계산기":
-    if st.button("[ 업데이트 내역 (26-03-11) ]"):
+    if st.button("[ 업데이트 내역 (26-03-27) ]"):
         trU.update_info()
         
     col1, col2 = st.columns([3,1])
