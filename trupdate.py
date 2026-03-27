@@ -4,10 +4,10 @@ UPDATES = [
     {
         "title": "테일즈런너 3월 2차 업데이트",
         "items": [
-            "**마루/춘배 낚시 프렌즈 추가",
+            "**마루/춘배 낚시 프렌즈 추가**",
         ],
         "link": "https://tr.game.onstove.com/news/updates/87?page=1",
-        "note": "누락된 사항이 있으면 피드백 버튼 이용 바랍니다.",
+        "note": "",
     },
     {
         "title": "피드백 업데이트(26-03-11)",
