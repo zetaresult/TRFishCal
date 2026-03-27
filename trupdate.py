@@ -2,6 +2,14 @@ import streamlit as st
 
 UPDATES = [
     {
+        "title": "테일즈런너 3월 2차 업데이트",
+        "items": [
+            "**마루/춘배 낚시 프렌즈 추가",
+        ],
+        "link": "https://tr.game.onstove.com/news/updates/87?page=1",
+        "note": "-",
+    },
+    {
         "title": "피드백 업데이트(26-03-11)",
         "items": [
             "**낚싯대**(그린우드 빗자루 낚싯대 등 4개) 추가",
